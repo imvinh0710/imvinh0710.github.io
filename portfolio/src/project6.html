@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chương 6 - An toàn và liêm chính học thuật trong môi trường số</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;700&amp;family=Geist:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#00dbe9",
+                        "on-primary-fixed-variant": "#74009f",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-container": "#ffffff",
+                        "outline-variant": "#514255",
+                        "surface-dim": "#131317",
+                        "inverse-primary": "#9900cf",
+                        "error": "#ffb4ab",
+                        "outline": "#9d8ba0",
+                        "tertiary-container": "#757583",
+                        "secondary": "#d3fbff",
+                        "secondary-container": "#00eefc",
+                        "on-tertiary-fixed": "#1a1b26",
+                        "surface-container-lowest": "#0e0e12",
+                        "primary-fixed-dim": "#ecb2ff",
+                        "primary-fixed": "#f8d8ff",
+                        "surface-variant": "#353439",
+                        "surface": "#131317",
+                        "background": "#131317",
+                        "secondary-fixed": "#7df4ff",
+                        "surface-tint": "#ecb2ff",
+                        "on-primary-container": "#ffffff",
+                        "on-error": "#690005",
+                        "inverse-on-surface": "#303034",
+                        "inverse-surface": "#e4e1e7",
+                        "surface-container": "#1f1f23",
+                        "on-tertiary": "#2f303b",
+                        "on-secondary-fixed-variant": "#004f54",
+                        "tertiary-fixed-dim": "#c6c5d4",
+                        "on-secondary-container": "#00686f",
+                        "on-primary-fixed": "#320047",
+                        "on-secondary-fixed": "#002022",
+                        "primary-container": "#bd00ff",
+                        "surface-container-high": "#2a292e",
+                        "primary": "#ecb2ff",
+                        "on-tertiary-fixed-variant": "#454652",
+                        "on-surface": "#e4e1e7",
+                        "on-background": "#e4e1e7",
+                        "on-secondary": "#00363a",
+                        "error-container": "#93000a",
+                        "surface-bright": "#39393d",
+                        "surface-container-highest": "#353439",
+                        "tertiary-fixed": "#e2e1f1",
+                        "tertiary": "#c6c5d4",
+                        "surface-container-low": "#1b1b1f",
+                        "on-surface-variant": "#d4c0d7",
+                        "on-primary": "#520071"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "section-gap": "120px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "unit": "8px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "code-sm": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "headline-lg": ["Geist"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "code-sm": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                        "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(18, 18, 23, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+        .glass-card:hover {
+            border-color: #ecb2ff;
+            background: rgba(189, 0, 255, 0.05);
+        }
+        .motion-card {
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+        }
+        .motion-card.from-left { transform: translateX(-34px); }
+        .motion-card.from-right { transform: translateX(34px); }
+        .motion-card.is-visible { opacity: 1; transform: translate(0, 0); }
+        .motion-card.is-visible.glass-card:hover,
+        .motion-card.is-visible.infographic-card:hover {
+            transform: translateY(-4px);
+        }
+        .motion-card.is-visible.infographic-card:hover .infographic-image {
+            transform: scale(1.02);
+        }
+        .grid-bg {
+            background-image: radial-gradient(rgba(189, 0, 255, 0.1) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        :root {
+            --frame-bg2: #161616;
+            --frame-bg3: #1e1e1e;
+            --frame-border: rgba(255,255,255,0.08);
+            --frame-text: #e4e1e7;
+            --frame-text2: #d4c0d7;
+            --frame-accent: #ecb2ff;
+            --frame-accent2: #bd00ff;
+        }
+        body {
+            background-color: #050505;
+            background-image:
+                radial-gradient(circle at 50% 50%, rgba(189, 0, 255, 0.05) 0%, transparent 50%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+        }
+        .top-nav { position: fixed; inset: 0 0 auto; z-index: 50; height: 48px; background: rgba(19,19,23,0.8); backdrop-filter: blur(24px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .top-nav-inner { max-width: 1280px; height: 48px; margin: 0 auto; padding: 0 64px; display: flex; align-items: center; justify-content: space-between; }
+        .brand { color: var(--frame-accent); text-decoration: none; font-size: 40px; line-height: 48px; font-weight: 800; letter-spacing: -0.04em; font-family: 'Geist', sans-serif; }
+        .brand:hover { text-shadow: 0 0 10px rgba(189, 0, 255, 0.3); }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .top-nav-link { position: relative; display: inline-flex; padding: 6px 0; color: #d4c0d7; font-size: 16px; font-weight: 500; text-decoration: none; transition: color 0.25s ease, transform 0.25s ease; }
+        .top-nav-link::after { content: ''; position: absolute; left: 50%; right: 50%; bottom: 0; height: 2px; background: currentColor; border-radius: 999px; transition: left 0.28s ease, right 0.28s ease; }
+        .top-nav-link:hover { color: #d3fbff; transform: translateY(-4px); }
+        .top-nav-link:hover::after, .top-nav-link.is-active::after { left: 0; right: 0; }
+        .top-nav-link.is-active { color: var(--frame-accent); font-weight: 700; }
+        .top-connect { position: relative; overflow: hidden; isolation: isolate; display: inline-flex; align-items: center; gap: 8px; color: #fff; background: #bd00ff; padding: 8px 24px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-decoration: none; transition: transform 0.25s ease, box-shadow 0.25s ease; }
+        .top-connect::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.28) 45%, transparent 58%); transform: translateX(-130%); transition: transform 0.55s ease; }
+        .top-connect:hover { transform: translateY(-3px); box-shadow: 0 0 22px rgba(189,0,255,0.55), 0 0 40px rgba(211,251,255,0.18); }
+        .top-connect:hover::before { transform: translateX(130%); }
+        .top-connect .material-symbols-outlined { transition: transform 0.25s ease; }
+        .top-connect:hover .material-symbols-outlined { transform: translateX(5px); }
+        .page { width: 100%; max-width: 1280px; margin: 0 auto; padding: 128px 64px 0; }
+        .project-content { padding: 0; max-width: none; margin: 0; }
+        .frame-back-button, .doc-download-btn, .next-lesson-btn, .final-back-button { position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 8px; padding: 8px 16px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 16px; font-weight: 700; letter-spacing: 0.1em; text-decoration: none; border: 1px solid var(--frame-border); transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, color 0.25s ease, background 0.25s ease; }
+        .frame-back-button { color: var(--frame-text2); background: rgba(31,31,35,0.5); margin-bottom: 32px; width: fit-content; border-radius: 4px; }
+        .frame-back-button:hover { color: var(--frame-accent); border-color: rgba(236,178,255,0.45); background: rgba(31,31,35,0.85); transform: translateX(-4px); }
+        .doc-download-btn { gap: 12px; padding: 16px 32px; color: #ffe1e2; background: linear-gradient(135deg, rgba(255, 90, 95, 0.16), rgba(189, 0, 255, 0.08)); border-color: rgba(255, 90, 95, 0.46); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04); }
+        .doc-download-btn::before, .next-lesson-btn::before { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.2) 45%, transparent 60%); transform: translateX(-130%); transition: transform 0.55s ease; }
+        .doc-download-btn:hover { color: #ffffff; transform: translateY(-3px); border-color: rgba(255, 90, 95, 0.9); box-shadow: 0 0 18px rgba(255,90,95,0.32), 0 0 30px rgba(189,0,255,0.12); }
+        .doc-download-btn:hover::before, .next-lesson-btn:hover::before { transform: translateX(130%); }
+        .doc-download-btn > *, .next-lesson-btn > * { position: relative; z-index: 1; }
+        .pdf-icon { color: #ff5a5f; filter: drop-shadow(0 0 8px rgba(255,90,95,0.45)); }
+        .next-lesson-btn { gap: 8px; padding: 16px 40px; background: #bd00ff; color: #ffffff; border-color: #bd00ff; box-shadow: 0 0 20px rgba(189, 0, 255, 0.4); isolation: isolate; font-family: 'Inter', sans-serif; font-size: 16px; line-height: 24px; letter-spacing: 0; }
+        .next-lesson-btn::before { z-index: 0; }
+        .next-lesson-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(189, 0, 255, 0.6); }
+        .next-lesson-btn:active { transform: scale(0.95); }
+        .final-actions { display: grid; gap: 24px; margin: 80px 0 120px; width: 100%; justify-items: stretch; }
+        .final-download-row { display: flex; justify-content: center; }
+        .final-nav-row { display: flex; justify-content: center; align-items: center; gap: 24px; width: 100%; }
+        .final-back-button { padding: 16px 32px; background: #ffffff; color: #131317; border: 1px solid rgba(255,255,255,0.85); font-family: 'Inter', sans-serif; font-size: 16px; line-height: 24px; font-weight: 700; letter-spacing: 0; }
+        .final-back-button:hover { transform: translateX(-4px); box-shadow: 0 0 24px rgba(255,255,255,0.18); }
+        .final-nav-row .next-lesson-btn, .final-nav-row .final-back-button { min-width: 260px; }
+        .project-gradient-title { background: linear-gradient(90deg, #ecb2ff 0%, #8fb8ff 45%, #00dbe9 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; font-family: ui-sans-serif, system-ui, sans-serif; font-size: 48px; line-height: 1.24; font-weight: 800; letter-spacing: 0; padding: 12px 0 14px; white-space: normal; }
+        .section-label { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 16px; letter-spacing: 0.1em; font-weight: 700; text-transform: uppercase; color: var(--frame-accent); margin-bottom: 24px; display: flex; align-items: center; gap: 8px; }
+        .section-label .material-symbols-outlined { font-size: 18px; line-height: 1; }
+        .principles-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+        .infographic-side { position: relative; }
+        .infographic-label { position: absolute; top: -36px; left: 0; margin-bottom: 0; }
+        .infographic-card { cursor: zoom-in; }
+        .infographic-image { width: 100%; max-height: 780px; object-fit: contain; display: block; border-radius: 10px; background: rgba(0,0,0,0.18); transition: transform 0.28s ease, filter 0.28s ease; }
+        .infographic-card:hover .infographic-image { transform: scale(1.02); filter: brightness(1.08); }
+        .image-lightbox { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; padding: 32px; background: rgba(0,0,0,0.84); backdrop-filter: blur(10px); overflow: hidden; }
+        .image-lightbox.is-open { display: flex; }
+        .image-lightbox img { max-width: min(1100px, 96vw); max-height: 86vh; object-fit: contain; border-radius: 10px; border: 1px solid rgba(255,255,255,0.18); box-shadow: 0 24px 80px rgba(0,0,0,0.55); background: #050505; cursor: grab; user-select: none; transition: transform 0.08s ease-out; }
+        .image-lightbox img.is-dragging { cursor: grabbing; transition: none; }
+        .image-lightbox button { position: absolute; top: 20px; right: 20px; width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.18); background: rgba(31,31,35,0.8); color: var(--frame-text); cursor: pointer; }
+        @media (max-width: 900px) { .project-gradient-title { font-size: 34px; white-space: normal; } .principles-layout { grid-template-columns: 1fr; } .infographic-side { padding-top: 36px; } .infographic-label { top: 0; } .infographic-card { max-width: 520px; width: 100%; margin: 0 auto; } }
+        @media (max-width: 640px) { .top-nav-inner { padding: 0 16px; } .nav-links, .top-connect { display: none; } .page { padding: 112px 16px 0; } .final-download-row, .final-nav-row { flex-direction: column; align-items: stretch; } .final-back-button, .doc-download-btn, .next-lesson-btn { width: 100%; min-width: 0; } }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary/30">
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <a class="brand" href="home.html">VINHTRAN</a>
+    <div class="nav-links">
+      <a class="top-nav-link" href="info.html">Thông tin</a>
+      <a class="top-nav-link is-active" href="project.html">Dự án</a>
+      <a class="top-nav-link" href="summary.html">Tổng kết</a>
+    </div>
+    <a class="top-connect" href="contact.html">Connect<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_forward</span></a>
+  </div>
+</nav>
+<div class="page">
+  <a class="frame-back-button" href="project.html">
+    <span class="material-symbols-outlined">arrow_back</span>
+    <span>Quay l&#7841;i danh s&#225;ch d&#7921; &#225;n</span>
+  </a>
+<main class="project-content">
+<!-- Hero Section -->
+<section class="mb-section-gap">
+<div class="relative z-10 max-w-6xl">
+<h1 class="project-gradient-title mb-6 max-w-6xl">
+                    Sử dụng AI có trách nhiệm trong học tập và nghiên cứu
+                </h1>
+<p class="text-on-surface-variant text-lg max-w-3xl leading-relaxed">
+                    Phân tích chính sách AI học thuật tại UEH &amp; RMIT — ghi lại quá trình dùng AI minh bạch — xây dựng bộ 7 nguyên tắc cá nhân
+                </p>
+</div>
+</section>
+<!-- Project Goals -->
+<section class="mb-section-gap">
+<div class="section-label"><span class="material-symbols-outlined">target</span> MỤC TIÊU BÀI TẬP</div>
+<div class="glass-card p-8 rounded-xl border-l-4 border-l-primary flex gap-6 items-start">
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="lightbulb">lightbulb</span>
+<div class="space-y-2">
+<p class="font-body-md text-on-surface-variant text-lg">
+                    Trình bày bộ nguyên tắc cá nhân về sử dụng AI có trách nhiệm dựa trên các nghiên cứu đã thực hiện — bao gồm phân tích chính sách, ghi lại quá trình dùng AI, và phân tích đạo đức học thuật.
+                </p>
+</div>
+</div>
+</section>
+<!-- Academic AI Policy Analysis -->
+<section class="mb-section-gap">
+<div class="section-label"><span class="material-symbols-outlined">policy</span> CHÍNH SÁCH AI HỌC THUẬT</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-12">
+<!-- UEH Detail Cards -->
+<div class="glass-card p-6 rounded-xl">
+<h3 class="font-bold text-on-surface mb-4">Phân loại AI</h3>
+<p class="text-on-surface-variant text-sm mb-6">AI hỗ trợ (Grammarly...) vs AI tạo sinh (ChatGPT, Claude...)</p>
+</div>
+<div class="glass-card p-6 rounded-xl">
+<h3 class="font-bold text-on-surface mb-4">4 nguyên tắc cho phép</h3>
+<p class="text-on-surface-variant text-sm mb-6">Minh bạch · Trung thực · Tôn trọng · Không lạm dụng</p>
+</div>
+<div class="glass-card p-6 rounded-xl">
+<h3 class="font-bold text-on-surface mb-4">8 hành vi vi phạm</h3>
+<p class="text-on-surface-variant text-sm mb-6">Không khai báo · Nội dung 100% AI · Trích dẫn giả (hallucination)...</p>
+</div>
+<div class="glass-card p-6 rounded-xl">
+<h3 class="font-bold text-on-surface mb-4">Phát hiện vi phạm</h3>
+<p class="text-on-surface-variant text-sm mb-6">Turnitin ≥20% — không phải căn cứ duy nhất, cần trao đổi trực tiếp</p>
+</div>
+</div>
+</section>
+<!-- AI Usage Log (Prompt Log) -->
+<section class="mb-section-gap">
+<div class="section-label"><span class="material-symbols-outlined">history</span> NHẬT KÝ SỬ DỤNG AI (PROMPT LOG)</div>
+<div class="overflow-hidden rounded-xl border border-white/10 bg-surface-container-lowest mb-12">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-variant/20">
+<th class="p-4 font-label-caps text-label-caps text-on-surface-variant w-16">ID</th>
+<th class="p-6 font-label-caps text-label-caps text-on-surface-variant">Prompt đã dùng</th>
+<th class="p-6 font-label-caps text-label-caps text-on-surface-variant">Đầu ra của AI</th>
+<th class="p-6 font-label-caps text-label-caps text-primary bg-primary/5">Đánh giá &amp; Chỉnh sửa</th>
+</tr>
+</thead>
+<tbody class="text-sm font-code-sm">
+<tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+<td class="p-4 text-on-surface-variant">01</td>
+<td class="p-6 text-on-surface">Hỏi tổng quan chính sách AI tại các trường đại học ở Việt Nam</td>
+<td class="p-6 italic">AI thiếu các con số cụ thể, văn bản pháp lí</td>
+<td class="p-6 bg-primary/5 text-primary font-bold">Không dùng, tự tra website UEH</td>
+</tr>
+<tr class="border-b border-white/5 hover:bg-white/5 transition-colors bg-white/2">
+<td class="p-4 text-on-surface-variant">02</td>
+<td class="p-6 text-on-surface">Lập dàn ý 5 phần cho bài báo cáo</td>
+<td class="p-6 italic">AI tạo dàn ý tương đối rõ ràng nhưng chưa phù hợp với rubric cụ thể</td>
+<td class="p-6 bg-primary/5 text-primary font-bold">Tái cấu trúc hoàn toàn theo rubric</td>
+</tr>
+<tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+<td class="p-4 text-on-surface-variant">03</td>
+<td class="p-6 text-on-surface">Phân tích lợi ích/rủi ro AI trong học tập và phát triển tư duy cho sinh viên</td>
+<td class="p-6 italic">4 lợi ích, 4 rủi ro, nhưng diễn đạt còn chung chung</td>
+<td class="p-6 bg-primary/5 text-primary font-bold">Chọn 2/4, viết lại bằng ngôn ngữ cá nhân</td>
+</tr>
+<tr class="border-b border-white/5 hover:bg-white/5 transition-colors bg-white/2">
+<td class="p-4 text-on-surface-variant">04</td>
+<td class="p-6 text-on-surface">Nhờ AI phản biện đoạn văn</td>
+<td class="p-6 italic">AI chỉ ra 2 điểm yếu</td>
+<td class="p-6 bg-primary/5 text-primary font-bold">Bổ sung ví dụ phân loại theo bài tập</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="p-4 text-on-surface-variant">05</td>
+<td class="p-6 text-on-surface">Kiểm tra 7 nguyên tắc</td>
+<td class="p-6 italic">AI xác nhận 6/7, nguyên tắc 3 chưa phản ánh rõ yêu cầu minh bạch</td>
+<td class="p-6 bg-primary/5 text-primary font-bold">Sửa nguyên tắc 3 thêm yếu tố minh bạch</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Declaration Box -->
+<div class="p-8 rounded-xl border border-primary/40 bg-primary/5 flex gap-6 items-start relative overflow-hidden">
+<span class="material-symbols-outlined text-primary text-4xl" data-weight="fill">verified</span>
+<div class="relative z-10">
+<h3 class="font-label-caps text-label-caps text-primary mb-2">KHAI BÁO SỬ DỤNG AI</h3>
+<div class="font-code-sm text-code-sm text-on-surface leading-relaxed space-y-2">
+<p><span class="text-primary-fixed-dim">Công cụ:</span> Claude (Anthropic)</p>
+<p><span class="text-primary-fixed-dim">Mục đích:</span> Gợi ý dàn ý / Phản biện các lập luận / Kiểm tra tính nhất quán</p>
+<p><span class="text-primary-fixed-dim">Phạm vi:</span> Toàn bộ nội dung, nhận định là suy nghĩ cá nhân của người viết. Thông tin được lấy trực tiếp trên website chính thống của UEH.</p>
+                    </div>
+</div>
+</div>
+</section>
+<!-- Ethical Analysis -->
+<section class="mb-section-gap">
+<div class="section-label"><span class="material-symbols-outlined">gavel</span> PHÂN TÍCH ĐẠO ĐỨC (3 VẤN ĐỀ)</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="glass-card p-8 rounded-xl flex flex-col h-full">
+<div class="mb-6 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">balance</span>
+</div>
+<h3 class="font-bold text-xl text-on-surface mb-4">Ranh giới hỗ trợ vs gian lận</h3>
+<p class="text-on-surface-variant mb-8 flex-grow">Không phải "có dùng AI" mà là "mức độ đóng góp thực chất của người học". Cùng hành vi (nhờ AI tóm tắt) có thể hợp lệ hoặc vi phạm tùy ngữ cảnh.</p>
+<span class="self-start px-4 py-1.5 rounded bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest">Ngữ cảnh cao</span>
+</div>
+<div class="glass-card p-8 rounded-xl flex flex-col h-full">
+<div class="mb-6 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">menu_book</span>
+</div>
+<h3 class="font-bold text-xl text-on-surface mb-4">Sở hữu trí tuệ &amp; trích dẫn</h3>
+<p class="text-on-surface-variant mb-8 flex-grow">AI hallucination tạo tài liệu tham khảo giả. Luật SHTT VN 2022 không công nhận AI là tác giả. Người dùng AI chịu trách nhiệm về nội dung.</p>
+<span class="self-start px-4 py-1.5 rounded bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest">Hallucination risk</span>
+</div>
+<div class="glass-card p-8 rounded-xl flex flex-col h-full">
+<div class="mb-6 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">psychology</span>
+</div>
+<h3 class="font-bold text-xl text-on-surface mb-4">Tác động phát triển tư duy</h3>
+<p class="text-on-surface-variant mb-8 flex-grow">Nghịch lý: AI giỏi nhất ở những nhiệm vụ não cần luyện tập nhất — viết, phân tích, lập luận. Phụ thuộc AI = thiếu hụt tư duy bậc cao dài hạn.</p>
+<span class="self-start px-4 py-1.5 rounded bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest">Rủi ro dài hạn</span>
+</div>
+</div>
+</section>
+<!-- IV. Personal Principles -->
+<section class="mb-section-gap">
+<div class="section-label"><span class="material-symbols-outlined">checklist</span> BỘ 7 NGUYÊN TẮC CÁ NHÂN</div>
+<div class="principles-layout">
+<div class="bg-surface-container-low rounded-xl border border-white/10 overflow-hidden divide-y divide-white/5">
+<div class="p-6 flex flex-col md:flex-row md:items-center gap-4 hover:bg-white/5 transition-colors group">
+<div class="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold shrink-0">1</div>
+<div class="flex-grow">
+<h3 class="font-bold text-on-surface">Khai báo mọi lúc, đúng chuẩn</h3>
+<p class="text-sm text-on-surface-variant">Ghi tên tool, phiên bản, mục đích, phạm vi ảnh hưởng trong mọi sản phẩm học thuật</p>
+</div>
+</div>
+<div class="p-6 flex flex-col md:flex-row md:items-center gap-4 hover:bg-white/5 transition-colors group">
+<div class="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold shrink-0">2</div>
+<div class="flex-grow">
+<h3 class="font-bold text-on-surface">Không nộp nội dung AI chưa qua tư duy</h3>
+<p class="text-sm text-on-surface-variant">Mọi output phải có phân tích &amp; chỉnh sửa của bản thân</p>
+</div>
+</div>
+<div class="p-6 flex flex-col md:flex-row md:items-center gap-4 hover:bg-white/5 transition-colors group">
+<div class="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold shrink-0">3</div>
+<div class="flex-grow">
+<h3 class="font-bold text-on-surface">Kiểm chứng mọi thông tin từ AI</h3>
+<p class="text-sm text-on-surface-variant">Số liệu, tên tác giả, tạp chí phải xác minh qua nguồn gốc</p>
+</div>
+</div>
+<div class="p-6 flex flex-col md:flex-row md:items-center gap-4 hover:bg-white/5 transition-colors group">
+<div class="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold shrink-0">4</div>
+<div class="flex-grow">
+<h3 class="font-bold text-on-surface">Tự làm trước, AI phản biện sau</h3>
+<p class="text-sm text-on-surface-variant">Hoàn thành bản nháp bằng tư duy cá nhân trước khi hỏi AI</p>
+</div>
+</div>
+<div class="p-6 flex flex-col md:flex-row md:items-center gap-4 hover:bg-white/5 transition-colors group">
+<div class="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold shrink-0">5</div>
+<div class="flex-grow">
+<h3 class="font-bold text-on-surface">Không cung cấp dữ liệu nhạy cảm</h3>
+<p class="text-sm text-on-surface-variant">Dữ liệu cá nhân, nội bộ, chưa công bố không đưa vào AI</p>
+</div>
+</div>
+<div class="p-6 flex flex-col md:flex-row md:items-center gap-4 hover:bg-white/5 transition-colors group">
+<div class="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold shrink-0">6</div>
+<div class="flex-grow">
+<h3 class="font-bold text-on-surface">Không dùng AI trong kiểm tra thi cử</h3>
+<p class="text-sm text-on-surface-variant">Tuyệt đối không dùng trong các bài kiểm tra, thi có giám sát</p>
+</div>
+</div>
+<div class="p-6 flex flex-col md:flex-row md:items-center gap-4 hover:bg-white/5 transition-colors group">
+<div class="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold shrink-0">7</div>
+<div class="flex-grow">
+<h3 class="font-bold text-on-surface">Phản tư định kỳ về thói quen dùng AI</h3>
+<p class="text-sm text-on-surface-variant">Sau mỗi lần dùng: "Mình đang học hay đang bỏ qua việc học?"</p>
+</div>
+</div>
+</div>
+<div class="infographic-side">
+<div class="section-label infographic-label"><span class="material-symbols-outlined">image</span> Infographic</div>
+<div class="glass-card infographic-card p-6 rounded-xl overflow-hidden">
+<img class="infographic-image" src="../resources/images/proofs/project6/infographic.png" alt="Infographic sử dụng AI có trách nhiệm trong học thuật">
+</div>
+</div>
+</div>
+</section>
+<!-- Conclusion & Lessons Learned -->
+<section id="conclusion">
+<div class="section-label"><span class="material-symbols-outlined">task_alt</span> KẾT LUẬN &amp; BÀI HỌC RÚT RA</div>
+<div class="bg-surface-container-lowest rounded-xl border border-white/10 divide-y divide-white/5">
+<div class="p-8 flex gap-6 items-center hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-primary">arrow_forward</span>
+<p class="text-lg">Thách thức lớn nhất là <span class="font-bold text-on-surface">văn hóa thực thi</span>, không phải ban hành quy định.</p>
+</div>
+<div class="p-8 flex gap-6 items-center hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-primary">arrow_forward</span>
+<p class="text-lg">Ranh giới hỗ trợ với gian lận không cố định — phụ thuộc <span class="font-bold text-on-surface">mức độ đóng góp thực chất</span> của người học, không phải việc có dùng AI hay không.</p>
+</div>
+<div class="p-8 flex gap-6 items-center hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-primary">arrow_forward</span>
+<p class="text-lg">AI hallucination là rủi ro thực — <span class="font-bold text-on-surface text-error">không bao giờ dùng trích dẫn từ AI</span> mà không kiểm chứng qua nguồn gốc.</p>
+</div>
+<div class="p-8 flex gap-6 items-center hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-primary">arrow_forward</span>
+<p class="text-lg">Bộ 7 nguyên tắc là điểm khởi đầu, không phải sản phẩm hoàn chỉnh — cần cập nhật khi AI và quy định tiếp tục thay đổi.</p>
+</div>
+</div>
+</section>
+</main>
+  <div class="final-actions">
+    <div class="final-download-row">
+      <a class="doc-download-btn" href="../resources/docs/Chuong 6.pdf" download="Chuong 6.pdf" target="_blank" rel="noopener noreferrer" type="application/pdf">
+        <span class="pdf-icon material-symbols-outlined">picture_as_pdf</span>
+        <span>Download PDF</span>
+      </a>
+    </div>
+    <div class="final-nav-row">
+      <a class="final-back-button" href="project5.html">
+        <span class="material-symbols-outlined">arrow_back</span>
+        <span>Quay l&#7841;i d&#7921; &#225;n tr&#432;&#7899;c</span>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="image-lightbox" id="imageLightbox" aria-hidden="true">
+  <button type="button" id="lightboxClose" aria-label="Đóng ảnh phóng to"><span class="material-symbols-outlined">close</span></button>
+  <img id="lightboxImage" src="" alt="Ảnh phóng to">
+</div>
+<script>
+        const lightbox = document.getElementById('imageLightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+        let zoomLevel = 1;
+        let panX = 0;
+        let panY = 0;
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+
+        const applyImageTransform = () => {
+            lightboxImage.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+        };
+
+        const resetImageTransform = () => {
+            zoomLevel = 1;
+            panX = 0;
+            panY = 0;
+            applyImageTransform();
+        };
+
+        document.querySelectorAll('.infographic-image').forEach((image) => {
+            image.addEventListener('click', () => {
+                lightboxImage.src = image.src;
+                lightboxImage.alt = image.alt;
+                resetImageTransform();
+                lightbox.classList.add('is-open');
+                lightbox.setAttribute('aria-hidden', 'false');
+            });
+        });
+
+        const closeLightbox = () => {
+            lightbox.classList.remove('is-open');
+            lightbox.setAttribute('aria-hidden', 'true');
+            lightboxImage.src = '';
+            resetImageTransform();
+        };
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('wheel', (event) => {
+            if (!lightbox.classList.contains('is-open')) return;
+            event.preventDefault();
+            const delta = event.deltaY < 0 ? 0.14 : -0.14;
+            zoomLevel = Math.min(4, Math.max(0.6, zoomLevel + delta));
+            if (zoomLevel <= 1) {
+                panX = 0;
+                panY = 0;
+            }
+            applyImageTransform();
+        }, { passive: false });
+        lightboxImage.addEventListener('mousedown', (event) => {
+            if (zoomLevel <= 1) return;
+            isDragging = true;
+            dragStartX = event.clientX - panX;
+            dragStartY = event.clientY - panY;
+            lightboxImage.classList.add('is-dragging');
+        });
+        document.addEventListener('mousemove', (event) => {
+            if (!isDragging) return;
+            panX = event.clientX - dragStartX;
+            panY = event.clientY - dragStartY;
+            applyImageTransform();
+        });
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            lightboxImage.classList.remove('is-dragging');
+        });
+        lightboxImage.addEventListener('dblclick', resetImageTransform);
+        lightbox.addEventListener('click', (event) => {
+            if (event.target === lightbox) closeLightbox();
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+        });
+
+        const motionObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('is-visible');
+                motionObserver.unobserve(entry.target);
+            });
+        }, { threshold: 0.16 });
+
+        document.querySelectorAll('header, .glass-card, .principles-layout > div, #conclusion .bg-surface-container-lowest > div, .final-actions').forEach((item, index) => {
+            item.classList.add('motion-card');
+            item.classList.add(index % 2 === 0 ? 'from-left' : 'from-right');
+            item.style.transitionDelay = `${Math.min(index * 38, 260)}ms`;
+            motionObserver.observe(item);
+        });
+
+        // Micro-interactions
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body></html>

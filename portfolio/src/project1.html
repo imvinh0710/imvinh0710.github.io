@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chương 1: Máy tính và các thiết bị ngoại vi</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;700&amp;family=Geist:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-tertiary-fixed": "#1a1b26",
+                "on-tertiary-container": "#ffffff",
+                "surface-variant": "#353439",
+                "surface-container": "#1f1f23",
+                "secondary-fixed": "#7df4ff",
+                "on-surface": "#e4e1e7",
+                "error-container": "#93000a",
+                "secondary-fixed-dim": "#00dbe9",
+                "primary": "#ecb2ff",
+                "tertiary": "#c6c5d4",
+                "surface": "#131317",
+                "on-background": "#e4e1e7",
+                "surface-dim": "#131317",
+                "on-surface-variant": "#d4c0d7",
+                "surface-container-low": "#1b1b1f",
+                "surface-tint": "#ecb2ff",
+                "on-secondary-fixed-variant": "#004f54",
+                "background": "#131317",
+                "on-primary": "#520071",
+                "on-primary-container": "#ffffff",
+                "on-tertiary-fixed-variant": "#454652",
+                "surface-container-high": "#2a292e",
+                "on-secondary-container": "#00686f",
+                "on-tertiary": "#2f303b",
+                "on-secondary": "#00363a",
+                "secondary": "#d3fbff",
+                "surface-container-highest": "#353439",
+                "surface-bright": "#39393d",
+                "on-error": "#690005",
+                "on-error-container": "#ffdad6",
+                "primary-fixed": "#f8d8ff",
+                "on-primary-fixed-variant": "#74009f",
+                "inverse-surface": "#e4e1e7",
+                "on-primary-fixed": "#320047",
+                "error": "#ffb4ab",
+                "inverse-on-surface": "#303034",
+                "secondary-container": "#00eefc",
+                "inverse-primary": "#9900cf",
+                "on-secondary-fixed": "#002022",
+                "tertiary-fixed-dim": "#c6c5d4",
+                "outline-variant": "#514255",
+                "tertiary-fixed": "#e2e1f1",
+                "primary-fixed-dim": "#ecb2ff",
+                "primary-container": "#bd00ff",
+                "outline": "#9d8ba0",
+                "tertiary-container": "#757583",
+                "surface-container-lowest": "#0e0e12"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "spacing": {
+                "margin-mobile": "16px",
+                "section-gap": "120px",
+                "unit": "8px",
+                "margin-desktop": "64px",
+                "gutter": "24px",
+                "container-max": "1280px"
+            },
+            "fontFamily": {
+                "headline-lg": ["Geist"],
+                "code-sm": ["JetBrains Mono"],
+                "label-caps": ["JetBrains Mono"],
+                "headline-lg-mobile": ["Geist"],
+                "display-lg": ["Geist"],
+                "body-md": ["Inter"]
+            },
+            "fontSize": {
+                "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "code-sm": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #050505;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(189, 0, 255, 0.05) 0%, transparent 50%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            color: #e4e1e7;
+        }
+        .glass-card {
+            background: rgba(18, 18, 23, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(189, 0, 255, 0.4);
+            box-shadow: 0 0 20px rgba(189, 0, 255, 0.1);
+        }
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .reveal-item.from-left { transform: translateX(-34px); }
+        .reveal-item.from-right { transform: translateX(34px); }
+        .reveal-item.is-visible {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+        .step-number {
+            transition: transform 0.28s ease, box-shadow 0.28s ease;
+        }
+        .reveal-item:hover .step-number {
+            transform: scale(1.08);
+            box-shadow: 0 0 18px rgba(236,178,255,0.18);
+        }
+        .neon-glow-text {
+            text-shadow: 0 0 10px rgba(189, 0, 255, 0.3);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .step-number {
+            font-family: 'JetBrains Mono', monospace;
+            background: linear-gradient(135deg, #bd00ff 0%, #00eefc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .top-nav-link {
+            position: relative;
+            display: inline-flex;
+            padding: 6px 0;
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+        .top-nav-link::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            right: 50%;
+            bottom: 0;
+            height: 2px;
+            background: currentColor;
+            border-radius: 999px;
+            transition: left 0.28s ease, right 0.28s ease;
+        }
+        .top-nav-link:hover {
+            transform: translateY(-4px);
+            color: #d3fbff;
+        }
+        .top-nav-link:hover::after {
+            left: 0;
+            right: 0;
+        }
+        .top-nav-link.is-active::after {
+            left: 0;
+            right: 0;
+        }
+        .top-connect {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .top-connect::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.28) 45%, transparent 58%);
+            transform: translateX(-130%);
+            transition: transform 0.55s ease;
+        }
+        .top-connect:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 22px rgba(189,0,255,0.55), 0 0 40px rgba(211,251,255,0.18);
+        }
+        .top-connect:hover::before {
+            transform: translateX(130%);
+        }
+        .top-connect .material-symbols-outlined {
+            transition: transform 0.25s ease;
+        }
+        .top-connect:hover .material-symbols-outlined {
+            transform: translateX(5px);
+        }
+        .doc-download-btn {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(255, 90, 95, 0.16), rgba(189, 0, 255, 0.08));
+            border: 1px solid rgba(255, 90, 95, 0.46);
+            color: #ffe1e2;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, color 0.22s ease;
+        }
+        .doc-download-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.18) 45%, transparent 60%);
+            transform: translateX(-130%);
+            transition: transform 0.55s ease;
+        }
+        .doc-download-btn:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 90, 95, 0.9);
+            color: #ffffff;
+            box-shadow: 0 0 18px rgba(255,90,95,0.32), 0 0 30px rgba(189,0,255,0.12);
+        }
+        .doc-download-btn:hover::before {
+            transform: translateX(130%);
+        }
+        .pdf-icon {
+            color: #ff5a5f;
+            filter: drop-shadow(0 0 8px rgba(255,90,95,0.45));
+        }
+        .doc-download-btn > * {
+            position: relative;
+            z-index: 1;
+        }
+        .next-lesson-btn {
+            position: relative;
+            overflow: hidden;
+            background: #bd00ff;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(189, 0, 255, 0.4);
+            isolation: isolate;
+        }
+        .next-lesson-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.25) 45%, transparent 58%);
+            transform: translateX(-130%);
+            transition: transform 0.55s ease;
+        }
+        .next-lesson-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(189, 0, 255, 0.6);
+        }
+        .next-lesson-btn:active {
+            transform: scale(0.95);
+        }
+        .next-lesson-btn:hover::before {
+            transform: translateX(130%);
+        }
+        .next-lesson-btn .material-symbols-outlined {
+            transition: transform 0.3s ease;
+        }
+        .next-lesson-btn:hover .material-symbols-outlined {
+            transform: translateX(4px);
+        }
+        .project-gradient-title {
+            background: linear-gradient(90deg, #ecb2ff 0%, #8fb8ff 45%, #00dbe9 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            font-family: ui-sans-serif, system-ui, sans-serif;
+            font-size: 48px;
+            line-height: 1.24;
+            font-weight: 800;
+            letter-spacing: 0;
+            padding: 6px 0 8px;
+            white-space: nowrap;
+        }
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 24px;
+        }
+        .proof-card {
+            grid-column: span 2;
+            min-width: 0;
+            cursor: zoom-in;
+        }
+        .proof-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            display: block;
+            background: rgba(0,0,0,0.18);
+            transition: transform 0.28s ease, filter 0.28s ease;
+        }
+        .proof-card:hover .proof-image {
+            transform: scale(1.035);
+            filter: brightness(1.1);
+        }
+        .image-lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            background: rgba(0,0,0,0.84);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+        .image-lightbox.is-open { display: flex; }
+        .image-lightbox img {
+            max-width: min(1100px, 96vw);
+            max-height: 86vh;
+            object-fit: contain;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.18);
+            box-shadow: 0 24px 80px rgba(0,0,0,0.55);
+            background: #050505;
+            cursor: grab;
+            user-select: none;
+            transition: transform 0.08s ease-out;
+        }
+        .image-lightbox img.is-dragging { cursor: grabbing; transition: none; }
+        .image-lightbox button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(31,31,35,0.8);
+            color: #e4e1e7;
+            cursor: pointer;
+        }
+        @media (max-width: 900px) {
+            .project-gradient-title { font-size: 34px; white-space: normal; }
+            .proof-grid { grid-template-columns: 1fr; }
+            .proof-card { grid-column: auto; }
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 right-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-white/5 shadow-none">
+<div class="flex justify-between items-center w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop h-full">
+<a class="font-display-lg text-headline-lg-mobile md:text-headline-lg text-primary tracking-tighter cursor-pointer hover:neon-glow-text transition-all" href="home.html">VINHTRAN</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="top-nav-link text-on-surface-variant font-medium font-body-md" href="info.html">Thông tin</a>
+<a class="top-nav-link is-active text-primary font-bold font-body-md" href="project.html">Dự án</a>
+<a class="top-nav-link text-on-surface-variant font-medium font-body-md" href="summary.html">Tổng kết</a>
+</div>
+<a class="top-connect hidden md:flex items-center gap-2 bg-primary-container text-white px-6 py-2 rounded font-label-caps text-label-caps transition-all" href="contact.html">Connect<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_forward</span></a>
+<button class="md:hidden text-primary"><span class="material-symbols-outlined text-[32px]">menu</span></button>
+</div>
+</nav>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop pt-32 pb-section-gap">
+<!-- Back Button -->
+<a class="back-button inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-lg border border-white/10 bg-surface-container/50 hover:bg-surface-container hover:border-primary/40 text-on-surface-variant hover:text-primary transition-all duration-300 hover:translate-x-[-4px] group" href="project.html">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">arrow_back</span>
+<span class="font-label-caps text-label-caps">Quay lại danh sách dự án</span>
+</a>
+<!-- Hero Section -->
+<header class="mb-16">
+<h1 class="project-gradient-title mb-6 max-w-6xl">
+                Thao tác cơ bản với tệp tin và thư mục
+            </h1>
+<p class="text-on-surface-variant text-lg max-w-3xl leading-relaxed">
+                Thực hành các thao tác quản lý tệp tin trên Windows: tạo, đổi tên, sao chép, di chuyển, xóa và khôi phục tệp/thư mục.
+            </p>
+</header>
+<!-- Objectives -->
+<section class="mb-section-gap">
+<h2 class="font-label-caps text-label-caps text-primary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-size: 18px;">target</span>
+                MỤC TIÊU BÀI TẬP
+            </h2>
+<div class="glass-card p-8 rounded-xl border-l-4 border-l-primary flex gap-6 items-start">
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="lightbulb">lightbulb</span>
+<div class="space-y-3">
+<p class="font-body-md text-on-surface-variant text-lg">Nắm được các thao tác cơ bản khi làm việc với tệp tin và thư mục trên hệ điều hành Windows.</p>
+<p class="font-body-md text-on-surface-variant text-lg">Biết cách tổ chức cấu trúc thư mục hợp lý, đặt tên tệp theo quy tắc nhất quán, và thực hiện thành thạo các thao tác copy, cut, paste, delete, restore.</p>
+</div>
+</div>
+</section>
+<!-- File Structure -->
+<section class="mb-section-gap">
+<h2 class="font-label-caps text-label-caps text-primary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-size: 18px;">account_tree</span>
+                CẤU TRÚC THƯ MỤC ĐÃ THIẾT LẬP
+            </h2>
+<div class="glass-card p-10 rounded-xl">
+<div class="bg-black/50 rounded-lg p-6 font-code-sm text-code-sm border border-white/5">
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">folder</span>
+<span class="text-on-surface">Thuchanh_TranTheVinh/</span>
+</div>
+<div class="ml-8 space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">description</span>
+<span class="text-on-surface-variant">GhiChuQuanTrong.txt</span>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">folder</span>
+<span class="text-on-surface">TaiLieu/</span>
+</div>
+<div class="ml-8 space-y-4">
+<div class="flex items-center gap-3 opacity-60">
+<span class="material-symbols-outlined text-on-surface-variant">description</span>
+<span class="text-on-surface-variant">GhiChuQuanTrong.txt</span>
+<span class="text-label-caps opacity-50">(bản sao)</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">description</span>
+<span class="text-on-surface-variant">DiChuyen.txt</span>
+<span class="text-label-caps opacity-50">(đã di chuyển vào)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Actions List -->
+<section class="mb-section-gap">
+<h2 class="font-label-caps text-label-caps text-primary mb-8 flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-size: 18px;">history</span>
+                CÁC THAO TÁC CHÍNH ĐÃ THỰC HIỆN
+            </h2>
+<div class="space-y-4">
+<!-- Action 1 -->
+<div class="glass-card p-6 rounded-xl flex flex-col md:flex-row items-center gap-6">
+<div class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-high font-bold text-xl step-number">1</div>
+<div class="flex-grow">
+<h3 class="font-bold text-lg mb-1">Tạo thư mục gốc</h3>
+<p class="text-on-surface-variant">Nhấp chuột phải → New → Folder. Đặt tên <code class="bg-surface-container px-2 py-0.5 rounded text-primary">Thuchanh_TranTheVinh</code> theo quy tắc định sẵn.</p>
+</div>
+<div class="p-4 bg-surface-container-highest rounded-lg opacity-80">
+<span class="material-symbols-outlined text-primary">create_new_folder</span>
+</div>
+</div>
+<!-- Action 2 -->
+<div class="glass-card p-6 rounded-xl flex flex-col md:flex-row items-center gap-6">
+<div class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-high font-bold text-xl step-number">2</div>
+<div class="flex-grow">
+<h3 class="font-bold text-lg mb-1">Tạo tệp văn bản</h3>
+<p class="text-on-surface-variant">Tạo <code class="bg-surface-container px-2 py-0.5 rounded text-primary">GhiChu.txt</code> bằng New → Text Document bên trong thư mục vừa tạo.</p>
+</div>
+<div class="p-4 bg-surface-container-highest rounded-lg opacity-80">
+<span class="material-symbols-outlined text-primary">note_add</span>
+</div>
+</div>
+<!-- Action 3 -->
+<div class="glass-card p-6 rounded-xl flex flex-col md:flex-row items-center gap-6">
+<div class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-high font-bold text-xl step-number">3</div>
+<div class="flex-grow">
+<h3 class="font-bold text-lg mb-1">Đổi tên tệp</h3>
+<p class="text-on-surface-variant">Rename <code class="bg-surface-container px-2 py-0.5 rounded text-primary">GhiChu.txt</code> → <code class="bg-surface-container px-2 py-0.5 rounded text-primary">GhiChuQuanTrong.txt</code> để tên phản ánh đúng nội dung.</p>
+</div>
+<div class="p-4 bg-surface-container-highest rounded-lg opacity-80">
+<span class="material-symbols-outlined text-primary">edit_note</span>
+</div>
+</div>
+<!-- Action 5 -->
+<div class="glass-card p-6 rounded-xl flex flex-col md:flex-row items-center gap-6">
+<div class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-high font-bold text-xl step-number">4</div>
+<div class="flex-grow">
+<h3 class="font-bold text-lg mb-1">Sao chép tệp (Copy &amp; Paste)</h3>
+<p class="text-on-surface-variant">Ctrl+C tệp <code class="bg-surface-container px-2 py-0.5 rounded text-primary">GhiChuQuanTrong.txt</code> rồi Ctrl+V vào thư mục <code class="bg-surface-container px-2 py-0.5 rounded text-primary">TaiLieu/</code>.</p>
+</div>
+<div class="p-4 bg-surface-container-highest rounded-lg opacity-80">
+<span class="material-symbols-outlined text-primary">content_copy</span>
+</div>
+</div>
+<!-- Action 6 -->
+<div class="glass-card p-6 rounded-xl flex flex-col md:flex-row items-center gap-6">
+<div class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-high font-bold text-xl step-number">5</div>
+<div class="flex-grow">
+<h3 class="font-bold text-lg mb-1">Di chuyển tệp (Cut &amp; Paste)</h3>
+<p class="text-on-surface-variant">Tạo <code class="bg-surface-container px-2 py-0.5 rounded text-primary">DiChuyen.txt</code>, sau đó Ctrl+X → Ctrl+V vào <code class="bg-surface-container px-2 py-0.5 rounded text-primary">TaiLieu/</code>.</p>
+</div>
+<div class="p-4 bg-surface-container-highest rounded-lg opacity-80">
+<span class="material-symbols-outlined text-primary">content_cut</span>
+</div>
+</div>
+<!-- Action 9 -->
+<div class="glass-card p-6 rounded-xl flex flex-col md:flex-row items-center gap-6">
+<div class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-high font-bold text-xl step-number">6</div>
+<div class="flex-grow">
+<h3 class="font-bold text-lg mb-1">Xóa và khôi phục tệp bằng Recycle Bin</h3>
+<p class="text-on-surface-variant">Xóa tệp, sau đó mở Recycle Bin, nhấp chuột phải vào <code class="bg-surface-container px-2 py-0.5 rounded text-primary">GhiChuQuanTrong.txt</code> → Restore.</p>
+</div>
+<div class="p-4 bg-surface-container-highest rounded-lg opacity-80">
+<span class="material-symbols-outlined text-primary">restore</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-section-gap">
+<div class="glass-card p-8 rounded-xl">
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-2">SỐ THAO TÁC THỰC HIỆN</p>
+<div class="text-5xl font-display-lg text-primary tracking-tight">12</div>
+</div>
+<div class="glass-card p-8 rounded-xl">
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-2">TỆP TIN ĐÃ TẠO</p>
+<div class="text-5xl font-display-lg text-secondary-fixed-dim tracking-tight">3</div>
+</div>
+<div class="glass-card p-8 rounded-xl">
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-2">THƯ MỤC THIẾT LẬP</p>
+<div class="text-5xl font-display-lg text-tertiary tracking-tight">2</div>
+</div>
+</section>
+<!-- Naming Rules Section -->
+<section class="mb-section-gap">
+<h2 class="font-label-caps text-label-caps text-primary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-size: 18px;">rule</span>
+                QUY TẮC ĐẶT TÊN TỆP
+            </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="glass-card p-6 rounded-xl">
+<h3 class="font-label-caps text-label-caps text-primary mb-2">KHÔNG DẤU TIẾNG VIỆT</h3>
+<p class="text-on-surface-variant">Dùng chữ không dấu để tránh lỗi encoding trên các hệ thống khác nhau</p>
+</div>
+<div class="glass-card p-6 rounded-xl">
+<h3 class="font-label-caps text-label-caps text-primary mb-2">DÙNG GẠCH DƯỚI _</h3>
+<p class="text-on-surface-variant">Thay thế khoảng trắng bằng _ để tên tệp hợp lệ trên mọi hệ điều hành</p>
+</div>
+<div class="glass-card p-6 rounded-xl">
+<h3 class="font-label-caps text-label-caps text-primary mb-2">PASCALCASE CHO TÊN DÀI</h3>
+<p class="text-on-surface-variant">Viết hoa đầu mỗi từ giúp dễ đọc: GhiChuQuanTrong thay vì ghichuquantrong</p>
+</div>
+<div class="glass-card p-6 rounded-xl">
+<h3 class="font-label-caps text-label-caps text-primary mb-2">MÔ TẢ NỘI DUNG</h3>
+<p class="text-on-surface-variant">Tên tệp phải nói lên nội dung hoặc mục đích, không đặt tên chung chung</p>
+</div>
+</div>
+</section>
+<!-- Illustration Screenshots Section -->
+<section class="mb-section-gap">
+<h2 class="font-label-caps text-label-caps text-primary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-size: 18px;">photo_library</span>
+                ẢNH CHỤP MINH HỌA
+            </h2>
+<div class="proof-grid">
+<div class="glass-card rounded-lg p-6 text-center group overflow-hidden proof-card">
+<div class="aspect-video bg-surface-container flex items-center justify-center mb-4 overflow-hidden rounded">
+<img class="proof-image" src="../resources/images/proofs/project1/createfolder.jpg" alt="Tạo thư mục và đặt tên">
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Tạo thư mục &amp; đặt tên</p>
+</div>
+<div class="glass-card rounded-lg p-6 text-center group overflow-hidden proof-card">
+<div class="aspect-video bg-surface-container flex items-center justify-center mb-4 overflow-hidden rounded">
+<img class="proof-image" src="../resources/images/proofs/project1/createfile.jpg" alt="Tạo tệp văn bản">
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Tạo tệp văn bản</p>
+</div>
+<div class="glass-card rounded-lg p-6 text-center group overflow-hidden proof-card">
+<div class="aspect-video bg-surface-container flex items-center justify-center mb-4 overflow-hidden rounded">
+<img class="proof-image" src="../resources/images/proofs/project1/copyfile.png" alt="Thao tác copy tệp">
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Thao tác copy/cut/paste</p>
+</div>
+<div class="glass-card rounded-lg p-6 text-center group overflow-hidden proof-card">
+<div class="aspect-video bg-surface-container flex items-center justify-center mb-4 overflow-hidden rounded">
+<img class="proof-image" src="../resources/images/proofs/project1/renamefile.png" alt="Đổi tên tệp">
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Đổi tên tệp</p>
+</div>
+<div class="glass-card rounded-lg p-6 text-center group overflow-hidden proof-card">
+<div class="aspect-video bg-surface-container flex items-center justify-center mb-4 overflow-hidden rounded">
+<img class="proof-image" src="../resources/images/proofs/project1/deletefile.png" alt="Xóa tệp và Recycle Bin">
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Xóa tệp &amp; Recycle Bin</p>
+</div>
+<div class="glass-card rounded-lg p-6 text-center group overflow-hidden proof-card">
+<div class="aspect-video bg-surface-container flex items-center justify-center mb-4 overflow-hidden rounded">
+<img class="proof-image" src="../resources/images/proofs/project1/restorefile.png" alt="Khôi phục tệp đã xóa">
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Khôi phục tệp đã xóa</p>
+</div>
+</div>
+</section>
+<!-- Reflections -->
+<section>
+<h2 class="font-label-caps text-label-caps text-primary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-size: 18px;">psychology</span>
+                NHẬN XÉT &amp; BÀI HỌC RÚT RA
+            </h2>
+<div class="glass-card p-8 rounded-xl divide-y divide-white/5">
+<div class="py-6 flex gap-4 first:pt-0">
+<span class="material-symbols-outlined text-primary">trending_flat</span>
+<p class="text-on-surface leading-relaxed">Cấu trúc thư mục rõ ràng giúp tìm kiếm nhanh hơn và tránh nhầm lẫn giữa các phiên bản tệp.</p>
+</div>
+<div class="py-6 flex gap-4">
+<span class="material-symbols-outlined text-primary">trending_flat</span>
+<p class="text-on-surface leading-relaxed">Copy (Ctrl+C) giữ lại tệp gốc; Cut (Ctrl+X) xóa tệp khỏi vị trí cũ — cần phân biệt rõ để tránh mất dữ liệu.</p>
+</div>
+<div class="py-6 flex gap-4">
+<span class="material-symbols-outlined text-primary">trending_flat</span>
+<p class="text-on-surface leading-relaxed">Shift+Delete xóa vĩnh viễn, không khôi phục được — nên kiểm tra kỹ trước khi dùng.</p>
+</div>
+<div class="py-6 flex gap-4 last:pb-0">
+<span class="material-symbols-outlined text-primary">trending_flat</span>
+<p class="text-on-surface leading-relaxed">Quy tắc đặt tên nhất quán (không dấu, PascalCase, mô tả nội dung) giúp hệ thống tệp dễ quản lý lâu dài.</p>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<div class="mt-20 flex flex-col justify-center items-center gap-6">
+<a class="doc-download-btn inline-flex items-center gap-3 font-label-caps text-label-caps px-8 py-4 rounded-xl transition-all duration-300" href="../resources/docs/Chuong 1.pdf" download="Chuong 1.pdf" target="_blank" rel="noopener noreferrer" type="application/pdf">
+<span class="pdf-icon material-symbols-outlined text-[22px]">picture_as_pdf</span>
+<span>Download PDF</span>
+</a>
+<a class="next-lesson-btn px-10 py-4 font-bold rounded-xl transition-all inline-flex items-center gap-2" href="project2.html">
+<span>Tiếp tục dự án kế tiếp</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</a>
+</div>
+</main>
+<div class="image-lightbox" id="imageLightbox" aria-hidden="true">
+  <button type="button" id="lightboxClose" aria-label="Đóng ảnh phóng to"><span class="material-symbols-outlined">close</span></button>
+  <img id="lightboxImage" src="" alt="Ảnh phóng to">
+</div>
+<script>
+        const lightbox = document.getElementById('imageLightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+        let zoomLevel = 1;
+        let panX = 0;
+        let panY = 0;
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+
+        const applyImageTransform = () => {
+            lightboxImage.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+        };
+
+        const resetImageTransform = () => {
+            zoomLevel = 1;
+            panX = 0;
+            panY = 0;
+            applyImageTransform();
+        };
+
+        document.querySelectorAll('.proof-image').forEach((image) => {
+            image.addEventListener('click', () => {
+                lightboxImage.src = image.src;
+                lightboxImage.alt = image.alt;
+                resetImageTransform();
+                lightbox.classList.add('is-open');
+                lightbox.setAttribute('aria-hidden', 'false');
+            });
+        });
+
+        const closeLightbox = () => {
+            lightbox.classList.remove('is-open');
+            lightbox.setAttribute('aria-hidden', 'true');
+            lightboxImage.src = '';
+            resetImageTransform();
+        };
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('wheel', (event) => {
+            if (!lightbox.classList.contains('is-open')) return;
+            event.preventDefault();
+            const delta = event.deltaY < 0 ? 0.14 : -0.14;
+            zoomLevel = Math.min(4, Math.max(0.6, zoomLevel + delta));
+            if (zoomLevel <= 1) {
+                panX = 0;
+                panY = 0;
+            }
+            applyImageTransform();
+        }, { passive: false });
+        lightboxImage.addEventListener('mousedown', (event) => {
+            if (zoomLevel <= 1) return;
+            isDragging = true;
+            dragStartX = event.clientX - panX;
+            dragStartY = event.clientY - panY;
+            lightboxImage.classList.add('is-dragging');
+        });
+        document.addEventListener('mousemove', (event) => {
+            if (!isDragging) return;
+            panX = event.clientX - dragStartX;
+            panY = event.clientY - dragStartY;
+            applyImageTransform();
+        });
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            lightboxImage.classList.remove('is-dragging');
+        });
+        lightboxImage.addEventListener('dblclick', resetImageTransform);
+        lightbox.addEventListener('click', (event) => {
+            if (event.target === lightbox) closeLightbox();
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+        });
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('is-visible');
+                revealObserver.unobserve(entry.target);
+            });
+        }, { threshold: 0.16 });
+
+        document.querySelectorAll('.glass-card').forEach((card, index) => {
+            card.classList.add('reveal-item');
+            card.style.transitionDelay = `${Math.min(index * 45, 260)}ms`;
+            revealObserver.observe(card);
+        });
+
+        document.querySelectorAll('.step-number').forEach((step) => {
+            step.closest('.glass-card')?.classList.add('from-left');
+        });
+
+        document.querySelectorAll('.proof-card').forEach((card, index) => {
+            card.classList.remove('from-left');
+            card.classList.add(index % 2 === 0 ? 'from-left' : 'from-right');
+        });
+
+        // Micro-interaction: Hover effects for glass cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,324 @@
+﻿<!DOCTYPE html><html class="dark" lang="vi" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;700&amp;family=Geist:wght@700;800&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#d3fbff",
+                    "on-tertiary-fixed": "#1a1b26",
+                    "inverse-surface": "#e4e1e7",
+                    "inverse-primary": "#9900cf",
+                    "primary": "#ecb2ff",
+                    "error-container": "#93000a",
+                    "surface-variant": "#353439",
+                    "on-tertiary-container": "#ffffff",
+                    "inverse-on-surface": "#303034",
+                    "surface-tint": "#ecb2ff",
+                    "surface-container-low": "#1b1b1f",
+                    "surface-container-highest": "#353439",
+                    "tertiary-fixed-dim": "#c6c5d4",
+                    "outline": "#9d8ba0",
+                    "on-tertiary": "#2f303b",
+                    "surface-container": "#1f1f23",
+                    "primary-fixed-dim": "#ecb2ff",
+                    "on-secondary": "#00363a",
+                    "primary-fixed": "#f8d8ff",
+                    "secondary-container": "#00eefc",
+                    "on-error-container": "#ffdad6",
+                    "tertiary": "#c6c5d4",
+                    "on-primary-fixed-variant": "#74009f",
+                    "on-surface": "#e4e1e7",
+                    "surface-dim": "#131317",
+                    "surface-bright": "#39393d",
+                    "on-tertiary-fixed-variant": "#454652",
+                    "on-primary": "#520071",
+                    "surface": "#131317",
+                    "on-secondary-fixed": "#002022",
+                    "tertiary-fixed": "#e2e1f1",
+                    "tertiary-container": "#757583",
+                    "on-surface-variant": "#d4c0d7",
+                    "background": "#131317",
+                    "secondary-fixed-dim": "#00dbe9",
+                    "on-secondary-fixed-variant": "#004f54",
+                    "on-error": "#690005",
+                    "error": "#ffb4ab",
+                    "surface-container-lowest": "#0e0e12",
+                    "secondary-fixed": "#7df4ff",
+                    "on-background": "#e4e1e7",
+                    "on-secondary-container": "#00686f",
+                    "on-primary-container": "#ffffff",
+                    "primary-container": "#bd00ff",
+                    "surface-container-high": "#2a292e",
+                    "outline-variant": "#514255",
+                    "on-primary-fixed": "#320047"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-desktop": "64px",
+                    "gutter": "24px",
+                    "unit": "8px",
+                    "container-max": "1280px",
+                    "section-gap": "120px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Geist"],
+                    "headline-lg-mobile": ["Geist"],
+                    "body-md": ["Inter"],
+                    "label-caps": ["JetBrains Mono"],
+                    "code-sm": ["JetBrains Mono"],
+                    "headline-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "code-sm": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            background-color: #050505;
+            color: #e4e1e7;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .glass-card {
+            background: rgba(18, 18, 23, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: #bd00ff;
+            box-shadow: 0 0 20px rgba(189, 0, 255, 0.15);
+        }
+        .cyber-gradient-text {
+            background: linear-gradient(90deg, #ecb2ff, #7df4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .timeline-line {
+            background: linear-gradient(to bottom, #bd00ff, #00eefc);
+        }
+        .terminal-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 18px;
+            background: #bd00ff;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 4px;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        .top-nav-link {
+            position: relative;
+            display: inline-flex;
+            padding: 6px 0;
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+
+        .top-nav-link::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            right: 50%;
+            bottom: 0;
+            height: 2px;
+            background: currentColor;
+            border-radius: 999px;
+            transition: left 0.28s ease, right 0.28s ease;
+        }
+
+        .top-nav-link:hover {
+            transform: translateY(-4px);
+            color: #d3fbff;
+        }
+
+        .top-nav-link:hover::after {
+            left: 0;
+            right: 0;
+        }
+
+        .top-nav-link.is-active::after {
+            left: 0;
+            right: 0;
+        }
+
+        .top-connect {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .top-connect::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.28) 45%, transparent 58%);
+            transform: translateX(-130%);
+            transition: transform 0.55s ease;
+        }
+
+        .top-connect:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 22px rgba(189,0,255,0.55), 0 0 40px rgba(211,251,255,0.18);
+        }
+
+        .top-connect:hover::before {
+            transform: translateX(130%);
+        }
+
+        .top-connect .material-symbols-outlined {
+            transition: transform 0.25s ease;
+        }
+
+        .top-connect:hover .material-symbols-outlined {
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased" style="background-position: 3.69531px 3.0114px;">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 right-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-white/5 shadow-none">
+<div class="flex justify-between items-center w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop h-full">
+<a class="font-display-lg text-headline-lg-mobile md:text-headline-lg text-primary tracking-tighter cursor-pointer hover:neon-glow-text transition-all" href="home.html">VINHTRAN</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="top-nav-link text-on-surface-variant font-medium font-body-md" href="info.html">Thông tin</a>
+<a class="top-nav-link text-on-surface-variant font-medium font-body-md" href="project.html">Dự án</a>
+<a class="top-nav-link text-on-surface-variant font-medium font-body-md" href="summary.html">Tổng kết</a>
+</div>
+<a class="top-connect hidden md:flex items-center gap-2 bg-primary-container text-white px-6 py-2 rounded font-label-caps text-label-caps transition-all" href="contact.html">Connect<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_forward</span></a>
+<button class="md:hidden text-primary"><span class="material-symbols-outlined text-[32px]">menu</span></button>
+</div>
+</nav>
+<main class="pb-section-gap max-w-container-max mx-auto px-margin-desktop pt-20">
+<!-- Hero / Bio Section -->
+<!-- Career Timeline Section -->
+<section class="mb-section-gap">
+<div class="relative pl-8 md:pl-0">
+<div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-px timeline-line"></div>
+<!-- Timeline Item 1 -->
+<!-- Timeline Item 2 -->
+<!-- Timeline Item 3 -->
+</div>
+</section>
+<!-- Contact Section -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start mb-section-gap">
+<div class="lg:col-span-5 space-y-8">
+<div class="space-y-4">
+<h2 class="font-display-lg text-display-lg cyber-gradient-text leading-tight">Liên hệ</h2>
+<p class="text-on-surface-variant text-body-md max-w-md">Bạn có câu hỏi gì dành cho tôi? Hay chỉ đơn giản bạn muốn tôi trò chuyện và tâm sự với bạn? Đặt câu hỏi cho tôi ngay!</p>
+</div>
+<div class="space-y-6">
+<div class="flex items-center gap-4 group">
+<div class="w-12 h-12 rounded-xl glass-card flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-on-primary-container transition-all">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-tertiary">EMAIL</p>
+<p class="text-on-surface font-medium">vtraanforwork@gmail.com</p>
+</div>
+</div>
+<div class="flex items-center gap-4 group">
+<div class="w-12 h-12 rounded-xl glass-card flex items-center justify-center text-secondary-fixed-dim group-hover:bg-secondary-container group-hover:text-on-secondary-container transition-all">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-tertiary">LOCATION</p>
+<p class="text-on-surface font-medium">VNU-UET, Hanoi, Vietnam</p>
+</div>
+</div><div class="flex items-center gap-4 group">
+<div class="w-12 h-12 rounded-xl glass-card flex items-center justify-center group-hover:bg-primary-container group-hover:text-on-primary-container transition-all text-primary">
+<span class="material-symbols-outlined">phone</span>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-tertiary">PHONE</p>
+<p class="text-on-surface font-medium">+84 862 597 725</p>
+</div>
+</div>
+</div>
+</div>
+<form class="lg:col-span-7 glass-card p-8 md:p-12 rounded-2xl" onsubmit="event.preventDefault(); alert('Message encrypted and sent.');">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-tertiary ml-1">HỌ TÊN</label>
+<input class="w-full bg-surface-container-lowest border border-white/10 rounded-lg px-4 py-3 text-on-surface focus:outline-none focus:border-secondary-fixed transition-colors" placeholder="John Doe" type="text">
+</div>
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-tertiary ml-1">EMAIL</label>
+<input class="w-full bg-surface-container-lowest border border-white/10 rounded-lg px-4 py-3 text-on-surface focus:outline-none focus:border-secondary-fixed transition-colors" placeholder="john@example.com" type="email">
+</div>
+</div>
+<div class="space-y-2 mb-6">
+<label class="font-label-caps text-label-caps text-tertiary ml-1">CHỦ ĐỀ</label>
+<input class="w-full bg-surface-container-lowest border border-white/10 rounded-lg px-4 py-3 text-on-surface focus:outline-none focus:border-secondary-fixed transition-colors" placeholder="Hợp tác dự án AI..." type="text">
+</div>
+<div class="space-y-2 mb-8">
+<label class="font-label-caps text-label-caps text-tertiary ml-1">NỘI DUNG</label>
+<textarea class="w-full bg-surface-container-lowest border border-white/10 rounded-lg px-4 py-3 text-on-surface focus:outline-none focus:border-secondary-fixed transition-colors resize-none" placeholder="Viết tin nhắn của bạn tại đây..." rows="5"></textarea>
+</div>
+<button class="w-full md:w-auto bg-primary-container text-on-primary-container px-12 py-4 rounded-lg font-label-caps text-label-caps hover:shadow-[0_0_25px_rgba(189,0,255,0.6)] transition-all flex items-center justify-center gap-3 group" type="submit">
+                    GỬI TIN NHẮN <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">send</span>
+</button>
+</form>
+<p class="col-span-full text-3xl mt-10 font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent font-display-lg tracking-tight text-left" style="opacity: 1;">Hoặc qua các nền tảng mạng xã hội sau đây</p>
+<div class="col-span-full flex justify-between items-center w-full mt-8">
+<a class="h-14 px-6 glass-card rounded-xl flex items-center justify-center gap-3 hover:bg-[#1877F2]/20 hover:shadow-[0_0_20px_rgba(24,119,242,0.4)] transform hover:-translate-y-1 transition-all" href="https://www.facebook.com/vinh.cpn/" target="_blank" rel="noopener noreferrer" style="color: rgb(24, 119, 242);">
+<svg aria-label="Facebook" class="w-8 h-8 shrink-0" fill="currentColor" role="img" viewBox="0 0 24 24"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.438H7.078v-3.49h3.047V9.414c0-3.025 1.792-4.697 4.533-4.697 1.313 0 2.686.236 2.686.236v2.97H15.83c-1.49 0-1.955.93-1.955 1.885v2.265h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+<span class="font-body-md text-body-md font-medium">Facebook</span>
+</a>
+<a class="h-14 px-6 glass-card rounded-xl flex items-center justify-center gap-3 hover:bg-[#E4405F]/20 hover:shadow-[0_0_20px_rgba(228,64,95,0.4)] transform hover:-translate-y-1 transition-all" href="https://www.instagram.com/ars.tvinh_/" target="_blank" rel="noopener noreferrer" style="color: rgb(228, 64, 95);">
+<svg aria-label="Instagram" class="w-8 h-8 shrink-0" fill="none" role="img" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect height="18" rx="5" width="18" x="3" y="3"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" fill="currentColor" r="1.2" stroke="none"/></svg>
+<span class="font-body-md text-body-md font-medium">Instagram</span>
+</a>
+<a class="h-14 px-6 glass-card rounded-xl flex items-center justify-center gap-3 hover:bg-[#0068FF]/20 hover:shadow-[0_0_20px_rgba(0,104,255,0.4)] transform hover:-translate-y-1 transition-all font-bold" href="#" target="_blank" rel="noopener noreferrer" style="color: rgb(0, 104, 255);">
+<img alt="Zalo" class="w-8 h-8 object-contain shrink-0 rounded-md" src="../resources/images/zaloicon.jpg">
+<span class="font-body-md text-body-md font-medium">Zalo</span>
+</a>
+<a class="h-14 px-6 glass-card rounded-xl flex items-center justify-center gap-3 hover:bg-[#0A66C2]/20 hover:shadow-[0_0_20px_rgba(10,102,194,0.4)] transform hover:-translate-y-1 transition-all" href="https://www.linkedin.com/in/tr%E1%BA%A7n-th%E1%BA%BF-vinh-63b1b3377/" target="_blank" rel="noopener noreferrer" style="color: rgb(10, 102, 194);">
+<svg aria-label="LinkedIn" class="w-8 h-8 shrink-0" fill="currentColor" role="img" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.447-2.136 2.942v5.664H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.063 2.063 0 1 1 0-4.126 2.063 2.063 0 0 1 0 4.126zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+<span class="font-body-md text-body-md font-medium">LinkedIn</span>
+</a>
+<a class="h-14 px-6 glass-card rounded-xl flex items-center justify-center gap-3 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] transform hover:-translate-y-1 transition-all" href="https://github.com/imvinh0710" target="_blank" rel="noopener noreferrer" style="color: rgb(255, 255, 255);">
+<svg aria-label="GitHub" class="w-8 h-8 shrink-0" fill="currentColor" role="img" viewBox="0 0 24 24"><path d="M12 .297C5.37.297 0 5.67 0 12.297c0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.725-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.755-1.333-1.755-1.09-.745.082-.73.082-.73 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.467-2.382 1.235-3.222-.123-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.49 11.49 0 0 1 3.003-.404c1.02.005 2.047.138 3.003.404 2.29-1.552 3.296-1.23 3.296-1.23.653 1.653.242 2.873.119 3.176.77.84 1.233 1.912 1.233 3.222 0 4.61-2.805 5.625-5.476 5.922.43.37.814 1.103.814 2.222 0 1.605-.015 2.898-.015 3.293 0 .32.216.694.825.576C20.565 22.092 24 17.597 24 12.297c0-6.627-5.373-12-12-12z"/></svg>
+<span class="font-body-md text-body-md font-medium">GitHub</span>
+</a>
+</div>
+</section>
+</main>
+<!-- Footer -->
+
+<script>
+        // Micro-interaction for mouse movement on background
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            document.body.style.backgroundPosition = `${x * 10}px ${y * 10}px`;
+        });
+    </script>
+
+
+
+
+</body></html>

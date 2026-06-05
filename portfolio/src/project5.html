@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chương 5 - Sáng tạo nội dung số</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;700&amp;family=Geist:wght@700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(18, 18, 23, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card:hover {
+            border-color: rgba(189, 0, 255, 0.3);
+            box-shadow: 0 0 20px rgba(189, 0, 255, 0.05);
+        }
+        .motion-card {
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .motion-card.from-left { transform: translateX(-34px); }
+        .motion-card.from-right { transform: translateX(34px); }
+        .motion-card.is-visible { opacity: 1; transform: translate(0, 0); }
+        .motion-card.is-visible:hover { transform: translateY(-4px); }
+        .step-active {
+            border-left: 2px solid #ecb2ff;
+        }
+        body {
+            background-color: #050505;
+        }
+        .neon-border-hover:hover {
+            border: 1px solid transparent;
+            background-image: linear-gradient(#121217, #121217), linear-gradient(to right, #bd00ff, #00eefc);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+        }
+        :root {
+            --frame-bg2: #161616;
+            --frame-bg3: #1e1e1e;
+            --frame-border: rgba(255,255,255,0.08);
+            --frame-text: #e4e1e7;
+            --frame-text2: #d4c0d7;
+            --frame-accent: #ecb2ff;
+            --frame-accent2: #bd00ff;
+        }
+        body {
+            background-color: #050505;
+            background-image:
+                radial-gradient(circle at 50% 50%, rgba(189, 0, 255, 0.05) 0%, transparent 50%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+        }
+        .top-nav {
+            position: fixed;
+            inset: 0 0 auto;
+            z-index: 50;
+            height: 48px;
+            background: rgba(19,19,23,0.8);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .top-nav-inner {
+            max-width: 1280px;
+            height: 48px;
+            margin: 0 auto;
+            padding: 0 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .brand {
+            color: var(--frame-accent);
+            text-decoration: none;
+            font-size: 40px;
+            line-height: 48px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            font-family: 'Geist', sans-serif;
+        }
+        .brand:hover { text-shadow: 0 0 10px rgba(189, 0, 255, 0.3); }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .top-nav-link {
+            position: relative;
+            display: inline-flex;
+            padding: 6px 0;
+            color: #d4c0d7;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+        .top-nav-link::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            right: 50%;
+            bottom: 0;
+            height: 2px;
+            background: currentColor;
+            border-radius: 999px;
+            transition: left 0.28s ease, right 0.28s ease;
+        }
+        .top-nav-link:hover { color: #d3fbff; transform: translateY(-4px); }
+        .top-nav-link:hover::after, .top-nav-link.is-active::after { left: 0; right: 0; }
+        .top-nav-link.is-active { color: var(--frame-accent); font-weight: 700; }
+        .top-connect {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            background: #bd00ff;
+            padding: 8px 24px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .top-connect::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.28) 45%, transparent 58%);
+            transform: translateX(-130%);
+            transition: transform 0.55s ease;
+        }
+        .top-connect:hover { transform: translateY(-3px); box-shadow: 0 0 22px rgba(189,0,255,0.55), 0 0 40px rgba(211,251,255,0.18); }
+        .top-connect:hover::before { transform: translateX(130%); }
+        .top-connect .material-symbols-outlined { transition: transform 0.25s ease; }
+        .top-connect:hover .material-symbols-outlined { transform: translateX(5px); }
+        .page { width: 100%; max-width: 1280px; margin: 0 auto; padding: 128px 64px 0; }
+        .project-content { padding: 0; max-width: none; margin: 0; }
+        .frame-back-button,
+        .doc-download-btn,
+        .next-lesson-btn,
+        .final-back-button {
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            line-height: 16px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            border: 1px solid var(--frame-border);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+        }
+        .frame-back-button {
+            color: var(--frame-text2);
+            background: rgba(31,31,35,0.5);
+            margin-bottom: 32px;
+            width: fit-content;
+            border-radius: 4px;
+        }
+        .frame-back-button:hover { color: var(--frame-accent); border-color: rgba(236,178,255,0.45); background: rgba(31,31,35,0.85); transform: translateX(-4px); }
+        .doc-download-btn {
+            gap: 12px;
+            padding: 16px 32px;
+            color: #ffe1e2;
+            background: linear-gradient(135deg, rgba(255, 90, 95, 0.16), rgba(189, 0, 255, 0.08));
+            border-color: rgba(255, 90, 95, 0.46);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+        }
+        .doc-download-btn::before,
+        .next-lesson-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.2) 45%, transparent 60%);
+            transform: translateX(-130%);
+            transition: transform 0.55s ease;
+        }
+        .doc-download-btn:hover { color: #ffffff; transform: translateY(-3px); border-color: rgba(255, 90, 95, 0.9); box-shadow: 0 0 18px rgba(255,90,95,0.32), 0 0 30px rgba(189,0,255,0.12); }
+        .doc-download-btn:hover::before,
+        .next-lesson-btn:hover::before { transform: translateX(130%); }
+        .doc-download-btn > *, .next-lesson-btn > * { position: relative; z-index: 1; }
+        .pdf-icon { color: #ff5a5f; filter: drop-shadow(0 0 8px rgba(255,90,95,0.45)); }
+        .next-lesson-btn {
+            gap: 8px;
+            padding: 16px 40px;
+            background: #bd00ff;
+            color: #ffffff;
+            border-color: #bd00ff;
+            box-shadow: 0 0 20px rgba(189, 0, 255, 0.4);
+            isolation: isolate;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: 0;
+        }
+        .next-lesson-btn::before { z-index: 0; }
+        .next-lesson-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(189, 0, 255, 0.6); }
+        .next-lesson-btn:active { transform: scale(0.95); }
+        .final-actions { display: grid; gap: 24px; margin: 80px 0 120px; width: 100%; justify-items: stretch; }
+        .final-download-row { display: flex; justify-content: center; }
+        .final-nav-row { display: flex; justify-content: space-between; align-items: center; gap: 24px; width: 100%; }
+        .final-back-button {
+            padding: 16px 32px;
+            background: #ffffff;
+            color: #131317;
+            border: 1px solid rgba(255,255,255,0.85);
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: 700;
+            letter-spacing: 0;
+        }
+        .final-back-button:hover { transform: translateX(-4px); box-shadow: 0 0 24px rgba(255,255,255,0.18); }
+        .final-nav-row .next-lesson-btn,
+        .final-nav-row .final-back-button { min-width: 260px; }
+        .project-gradient-title {
+            background: linear-gradient(90deg, #ecb2ff 0%, #8fb8ff 45%, #00dbe9 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            font-family: ui-sans-serif, system-ui, sans-serif;
+            font-size: 48px;
+            line-height: 1.24;
+            font-weight: 800;
+            letter-spacing: 0;
+            padding: 12px 0 14px;
+            white-space: normal;
+        }
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            line-height: 16px;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--frame-accent);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-label .material-symbols-outlined { font-size: 18px; line-height: 1; }
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 24px;
+        }
+        .proof-card {
+            min-width: 0;
+            cursor: zoom-in;
+        }
+        .proof-card-top { grid-column: span 2; }
+        .proof-card-bottom-left { grid-column: 2 / span 2; }
+        .proof-card-bottom-right { grid-column: 4 / span 2; }
+        .proof-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            display: block;
+            background: rgba(0,0,0,0.18);
+            transition: transform 0.28s ease, filter 0.28s ease;
+        }
+        .proof-card:hover .proof-image {
+            transform: scale(1.035);
+            filter: brightness(1.1);
+        }
+        .image-lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            background: rgba(0,0,0,0.84);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+        .image-lightbox.is-open { display: flex; }
+        .image-lightbox img {
+            max-width: min(1100px, 96vw);
+            max-height: 86vh;
+            object-fit: contain;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.18);
+            box-shadow: 0 24px 80px rgba(0,0,0,0.55);
+            background: #050505;
+            cursor: grab;
+            user-select: none;
+            transition: transform 0.08s ease-out;
+        }
+        .image-lightbox img.is-dragging { cursor: grabbing; transition: none; }
+        .image-lightbox button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(31,31,35,0.8);
+            color: var(--frame-text);
+            cursor: pointer;
+        }
+        @media (max-width: 900px) {
+            .project-gradient-title { font-size: 34px; white-space: normal; }
+            .proof-grid { grid-template-columns: 1fr; }
+            .proof-card-top,
+            .proof-card-bottom-left,
+            .proof-card-bottom-right { grid-column: auto; }
+        }
+        @media (max-width: 640px) {
+            .top-nav-inner { padding: 0 16px; }
+            .nav-links, .top-connect { display: none; }
+            .page { padding: 112px 16px 0; }
+            .final-download-row, .final-nav-row { flex-direction: column; align-items: stretch; }
+            .final-back-button, .doc-download-btn, .next-lesson-btn { width: 100%; min-width: 0; }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#d3fbff",
+                        "on-tertiary-container": "#ffffff",
+                        "inverse-surface": "#e4e1e7",
+                        "surface-bright": "#39393d",
+                        "secondary-fixed": "#7df4ff",
+                        "surface-variant": "#353439",
+                        "surface-container-low": "#1b1b1f",
+                        "on-primary-fixed-variant": "#74009f",
+                        "error-container": "#93000a",
+                        "on-error": "#690005",
+                        "background": "#131317",
+                        "secondary-container": "#00eefc",
+                        "inverse-on-surface": "#303034",
+                        "tertiary-container": "#757583",
+                        "on-tertiary-fixed": "#1a1b26",
+                        "on-primary-fixed": "#320047",
+                        "on-primary-container": "#ffffff",
+                        "surface-dim": "#131317",
+                        "on-secondary-container": "#00686f",
+                        "primary-fixed": "#f8d8ff",
+                        "surface-container": "#1f1f23",
+                        "primary-fixed-dim": "#ecb2ff",
+                        "tertiary": "#c6c5d4",
+                        "on-primary": "#520071",
+                        "on-secondary-fixed-variant": "#004f54",
+                        "on-background": "#e4e1e7",
+                        "outline-variant": "#514255",
+                        "surface-tint": "#ecb2ff",
+                        "tertiary-fixed": "#e2e1f1",
+                        "outline": "#9d8ba0",
+                        "surface-container-highest": "#353439",
+                        "surface-container-high": "#2a292e",
+                        "surface": "#131317",
+                        "error": "#ffb4ab",
+                        "on-tertiary": "#2f303b",
+                        "secondary-fixed-dim": "#00dbe9",
+                        "on-tertiary-fixed-variant": "#454652",
+                        "on-secondary-fixed": "#002022",
+                        "on-secondary": "#00363a",
+                        "tertiary-fixed-dim": "#c6c5d4",
+                        "inverse-primary": "#9900cf",
+                        "surface-container-lowest": "#0e0e12",
+                        "primary-container": "#bd00ff",
+                        "on-surface-variant": "#d4c0d7",
+                        "on-error-container": "#ffdad6",
+                        "on-surface": "#e4e1e7",
+                        "primary": "#ecb2ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "section-gap": "120px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px",
+                        "unit": "8px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Geist"],
+                        "body-md": ["Inter"],
+                        "code-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                        "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "code-sm": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <a class="brand" href="home.html">VINHTRAN</a>
+    <div class="nav-links">
+      <a class="top-nav-link" href="info.html">Th&#244;ng tin</a>
+      <a class="top-nav-link is-active" href="project.html">D&#7921; &#225;n</a>
+      <a class="top-nav-link" href="summary.html">T&#7893;ng k&#7871;t</a>
+    </div>
+    <a class="top-connect" href="contact.html">Connect<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_forward</span></a>
+  </div>
+</nav>
+<div class="page">
+  <a class="frame-back-button" href="project.html">
+    <span class="material-symbols-outlined">arrow_back</span>
+    <span>Quay l&#7841;i danh s&#225;ch d&#7921; &#225;n</span>
+  </a>
+<main class="project-content">
+<!-- Hero Section -->
+<section class="mb-section-gap">
+<div class="max-w-6xl">
+<h1 class="project-gradient-title mb-6 max-w-6xl">Sử dụng AI tạo sinh để hỗ trợ sáng tạo nội dung số</h1>
+<p class="text-on-surface-variant text-body-md mb-12 max-w-2xl leading-relaxed">
+                    Dự án nhóm xây dựng bài thuyết trình chuyên đề "Ứng dụng của Trí tuệ Nhân tạo và Công nghệ Số trong Kỹ thuật – Công nghệ" với sự hỗ trợ của 3 công cụ AI tạo sinh.
+                </p>
+</div>
+</section>
+<!-- Project Objective -->
+<section class="mb-section-gap">
+<div class="section-label"><span class="material-symbols-outlined">target</span> MỤC TIÊU DỰ ÁN</div>
+<div class="glass-card p-8 rounded-xl border-l-4 border-l-primary flex gap-6 items-start">
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="lightbulb">lightbulb</span>
+<div class="space-y-2">
+<p class="font-body-md text-on-surface-variant text-lg">
+                    Xây dựng bài thuyết trình chuyên đề hoàn chỉnh về ứng dụng AI trong kỹ thuật – công nghệ, đồng thời trải nghiệm và đánh giá khách quan ít nhất 3 công cụ AI tạo sinh (ChatGPT, Gemini, Canva AI) trong toàn bộ quy trình sáng tạo nội dung.
+                </p>
+</div>
+</div>
+</section>
+<!-- AI Tools Used -->
+<section class="mb-section-gap">
+<div class="section-label"><span class="material-symbols-outlined">smart_toy</span> BỘ CÔNG CỤ AI ĐÃ SỬ DỤNG</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="glass-card p-8 rounded-lg neon-border-hover transition-all duration-300">
+<div class="w-12 h-12 rounded bg-[#10a37f]/20 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-[#10a37f]" style="font-variation-settings: 'FILL' 1;">chat</span>
+</div>
+<h3 class="font-headline-lg text-2xl text-white mb-4">ChatGPT</h3>
+<p class="text-on-surface-variant mb-6 leading-relaxed">Xây dựng khung cấu trúc tổng thể, tra cứu nội dung ban đầu, làm rõ các khái niệm kỹ thuật.</p>
+<span class="inline-block px-3 py-1 bg-surface-container rounded-full text-code-sm font-code-sm text-secondary">Cấu trúc &amp; khung bài</span>
+</div>
+<div class="glass-card p-8 rounded-lg neon-border-hover transition-all duration-300">
+<div class="w-12 h-12 rounded bg-[#1a73e8]/20 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-[#1a73e8]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<h3 class="font-headline-lg text-2xl text-white mb-4">Google Gemini</h3>
+<p class="text-on-surface-variant mb-6 leading-relaxed">Phát triển nội dung chi tiết, cung cấp case study thực tế với tên công ty và số liệu cụ thể.</p>
+<span class="inline-block px-3 py-1 bg-surface-container rounded-full text-code-sm font-code-sm text-secondary">Nội dung &amp; ví dụ thực tế</span>
+</div>
+<div class="glass-card p-8 rounded-lg neon-border-hover transition-all duration-300">
+<div class="w-12 h-12 rounded bg-[#7d2ae8]/20 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-[#7d2ae8]" style="font-variation-settings: 'FILL' 1;">palette</span>
+</div>
+<h3 class="font-headline-lg text-2xl text-white mb-4">Canva AI</h3>
+<p class="text-on-surface-variant mb-6 leading-relaxed">Tạo layout slide, gợi ý bố cục và hình ảnh infographic. Magic Write + AI Design.</p>
+<span class="inline-block px-3 py-1 bg-surface-container rounded-full text-code-sm font-code-sm text-secondary">Thiết kế slide</span>
+</div>
+</div>
+</section>
+<!-- AI Workflow -->
+<section class="mb-section-gap overflow-hidden">
+<div class="section-label"><span class="material-symbols-outlined">account_tree</span> QUY TRÌNH LÀM VIỆC VỚI AI</div>
+<div class="flex flex-col md:flex-row glass-card rounded-lg divide-y md:divide-y-0 md:divide-x divide-white/5 overflow-hidden">
+<div class="p-6 flex-1 text-center group">
+<span class="material-symbols-outlined text-secondary mb-2 group-hover:animate-pulse">lightbulb</span>
+<h4 class="font-bold text-white mb-1">Brainstorm</h4>
+<p class="text-code-sm font-code-sm text-on-surface-variant">ChatGPT • 30 phút</p>
+</div>
+<div class="p-6 flex-1 text-center group">
+<span class="material-symbols-outlined text-secondary mb-2 group-hover:animate-pulse">edit_note</span>
+<h4 class="font-bold text-white mb-1">Viết nội dung</h4>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Gemini • từng phần</p>
+</div>
+<div class="p-6 flex-1 text-center group">
+<span class="material-symbols-outlined text-secondary mb-2 group-hover:animate-pulse">dashboard_customize</span>
+<h4 class="font-bold text-white mb-1">Thiết kế slide</h4>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Canva AI • song song</p>
+</div>
+<div class="p-6 flex-1 text-center group">
+<span class="material-symbols-outlined text-secondary mb-2 group-hover:animate-pulse">draw</span>
+<h4 class="font-bold text-white mb-1">Chỉnh sửa</h4>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Nhóm tự biên tập</p>
+</div>
+<div class="p-6 flex-1 text-center bg-primary/10">
+<span class="material-symbols-outlined text-primary mb-2">verified</span>
+<h4 class="font-bold text-white mb-1">Sản phẩm</h4>
+<p class="text-code-sm font-code-sm text-primary">24 slide hoàn chỉnh</p>
+</div>
+</div>
+</section>
+<!-- Detailed Prompts & Results -->
+<section class="mb-section-gap">
+<div class="section-label"><span class="material-symbols-outlined">summarize</span> CHI TIẾT PROMPT &amp; KẾT QUẢ THEO GIAI ĐOẠN</div>
+<!-- Stage 1 -->
+<div class="mb-12">
+<div class="flex items-center gap-4 mb-6">
+<span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold">1</span>
+<h3 class="font-headline-lg text-2xl text-white">Lên ý tưởng &amp; cấu trúc</h3>
+<span class="ml-auto px-4 py-1 bg-surface-container rounded-full text-code-sm font-code-sm text-on-surface-variant">ChatGPT</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full table-fixed text-left border-collapse glass-card rounded-lg overflow-hidden">
+<colgroup>
+<col class="w-[34%]"/>
+<col class="w-[33%]"/>
+<col class="w-[33%]"/>
+</colgroup>
+<thead>
+<tr class="bg-surface-container-high border-b border-white/5">
+<th class="p-6 font-label-caps text-label-caps text-on-surface-variant">PROMPT ĐÃ DÙNG</th>
+<th class="p-6 font-label-caps text-label-caps text-on-surface-variant">KẾT QUẢ NHẬN ĐƯỢC</th>
+<th class="p-6 font-label-caps text-label-caps text-on-surface-variant">CÁCH CHỈNH SỬA &amp; TÍCH HỢP</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr>
+<td class="p-6 text-on-surface italic font-code-sm">"Hãy gợi ý cấu trúc cho bài thuyết trình về ứng dụng AI trong kỹ thuật – công nghệ"</td>
+<td class="p-6 text-on-surface-variant">Dàn ý 5 phần rõ ràng: Giới thiệu, Tổng quan AI, Ứng dụng cụ thể, Lợi ích/Hạn chế, Kết luận. Nội dung còn chung chung.</td>
+<td class="p-6 text-on-surface-variant">Giữ khung 5 phần; thảo luận nhóm để chọn 3 ứng dụng cụ thể: bảo trì dự đoán, kiểm tra chất lượng, GitHub Copilot.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Stage 2 -->
+<div class="mb-12">
+<div class="flex items-center gap-4 mb-6">
+<span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold">2</span>
+<h3 class="font-headline-lg text-2xl text-white">Phát triển nội dung</h3>
+<span class="ml-auto px-4 py-1 bg-surface-container rounded-full text-code-sm font-code-sm text-on-surface-variant">Gemini + ChatGPT</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full table-fixed text-left border-collapse glass-card rounded-lg overflow-hidden">
+<colgroup>
+<col class="w-[34%]"/>
+<col class="w-[33%]"/>
+<col class="w-[33%]"/>
+</colgroup>
+<thead>
+<tr class="bg-surface-container-high border-b border-white/5">
+<th class="p-6 font-label-caps text-label-caps text-on-surface-variant">PROMPT ĐÃ DÙNG</th>
+<th class="p-6 font-label-caps text-label-caps text-on-surface-variant">KẾT QUẢ NHẬN ĐƯỢC</th>
+<th class="p-6 font-label-caps text-label-caps text-on-surface-variant">CÁCH CHỈNH SỬA &amp; TÍCH HỢP</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr>
+<td class="p-6 text-on-surface italic font-code-sm">"Giải thích chi tiết nguyên lý hoạt động của bảo trì dự đoán bằng AI"</td>
+<td class="p-6 text-on-surface-variant">Giải thích 4 bước: thu thập dữ liệu IoT → Cloud → phân tích ML → phản hồi kỹ thuật viên.</td>
+<td class="p-6 text-on-surface-variant">Tích hợp gần nguyên vẹn; bổ sung so sánh với bảo trì định kỳ và bảo trì sau hỏng.</td>
+</tr>
+<tr>
+<td class="p-6 text-on-surface italic font-code-sm">"Làm rõ GitHub Copilot: khái niệm, nguyên lý và tác động"</td>
+<td class="p-6 text-on-surface-variant">Giải thích cơ chế LLM, quy trình từ nhận ngữ cảnh đến gợi ý code. Liệt kê đầy đủ ngôn ngữ và IDE hỗ trợ.</td>
+<td class="p-6 text-on-surface-variant">Bổ sung hạn chế của Copilot; thêm ý về tầm quan trọng với sinh viên CNTT.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Stage 3 -->
+<div class="mb-12">
+<div class="flex items-center gap-4 mb-6">
+<span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold">3</span>
+<h3 class="font-headline-lg text-2xl text-white">Thiết kế slide</h3>
+<span class="ml-auto px-4 py-1 bg-surface-container rounded-full text-code-sm font-code-sm text-on-surface-variant">Canva AI</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full table-fixed text-left border-collapse glass-card rounded-lg overflow-hidden">
+<colgroup>
+<col class="w-[34%]"/>
+<col class="w-[33%]"/>
+<col class="w-[33%]"/>
+</colgroup>
+<thead>
+<tr class="bg-surface-container-high border-b border-white/5">
+<th class="p-6 font-label-caps text-label-caps text-on-surface-variant">PROMPT ĐÃ DÙNG</th>
+<th class="p-6 font-label-caps text-label-caps text-on-surface-variant">KẾT QUẢ NHẬN ĐƯỢC</th>
+<th class="p-6 font-label-caps text-label-caps text-on-surface-variant">CÁCH CHỈNH SỬA &amp; TÍCH HỢP</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr>
+<td class="p-6 text-on-surface italic font-code-sm">"Tạo
+các hình ảnh infographic về
+ứng dụng của AI trong lính
+vực khoa học và công nghệ"</td>
+<td class="p-6 text-on-surface-variant">Hình ảnh chân thực, sinh động, đồ họa đẹp, nhưng còn bị lỗi font chữ và cần sửa lại.</td>
+<td class="p-6 text-on-surface-variant">Giữ lại bố cục và màu sắc, tự chọn hình ảnh từ thư viện, viết lại nội dung text phù hợp nội dung bài thuyết trình.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- Final Structure -->
+<section class="mb-section-gap">
+<div class="section-label"><span class="material-symbols-outlined">view_carousel</span> CẤU TRÚC SẢN PHẨM CUỐI — 24 SLIDE</div>
+<div class="glass-card p-6 rounded-lg">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+<div class="rounded-lg bg-surface-container-low border border-white/5 p-5 text-center">
+<span class="block font-label-caps text-label-caps text-on-surface-variant mb-2">SỐ SLIDE HOÀN CHỈNH</span>
+<span class="font-display-lg text-headline-lg text-secondary">24</span>
+</div>
+<div class="rounded-lg bg-surface-container-low border border-white/5 p-5 text-center">
+<span class="block font-label-caps text-label-caps text-on-surface-variant mb-2">CÔNG CỤ AI SỬ DỤNG</span>
+<span class="font-display-lg text-headline-lg text-secondary">3</span>
+</div>
+<div class="rounded-lg bg-surface-container-low border border-white/5 p-5 text-center">
+<span class="block font-label-caps text-label-caps text-on-surface-variant mb-2">TIẾT KIỆM THỜI GIAN</span>
+<span class="font-display-lg text-headline-lg text-secondary">~8 giờ</span>
+</div>
+</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase text-center mb-4">Cấu trúc bài thuyết trình</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-3">
+<div class="min-h-[150px] rounded-lg bg-surface-container-low border border-secondary/30 p-4 text-center flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-secondary mb-2">groups</span>
+<div class="font-display-lg text-headline-lg-mobile text-white">4</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Giới thiệu nhóm &amp; đề tài</p>
+</div>
+<div class="min-h-[150px] rounded-lg bg-surface-container-low border border-primary/30 p-4 text-center flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-primary mb-2">hub</span>
+<div class="font-display-lg text-headline-lg-mobile text-white">5</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Tổng quan về AI</p>
+</div>
+<div class="min-h-[150px] rounded-lg bg-surface-container-low border border-secondary/30 p-4 text-center flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-secondary mb-2">memory</span>
+<div class="font-display-lg text-headline-lg-mobile text-white">8</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">3 ứng dụng cụ thể</p>
+</div>
+<div class="min-h-[150px] rounded-lg bg-surface-container-low border border-primary/30 p-4 text-center flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-primary mb-2">balance</span>
+<div class="font-display-lg text-headline-lg-mobile text-white">3</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Lợi ích &amp; hạn chế</p>
+</div>
+<div class="min-h-[150px] rounded-lg bg-surface-container-low border border-secondary/30 p-4 text-center flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-secondary mb-2">flag</span>
+<div class="font-display-lg text-headline-lg-mobile text-white">2</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Kết luận &amp; định hướng</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Comparison & Evaluation -->
+<section class="mb-section-gap">
+<!-- Comparison -->
+<div class="section-label"><span class="material-symbols-outlined">compare_arrows</span> SO SÁNH CHATGPT VS GEMINI</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter mb-section-gap">
+<div class="glass-card p-6 rounded-lg">
+<h4 class="font-bold text-white flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-[#10a37f]">chat</span> ChatGPT
+                            </h4>
+<ul class="space-y-2 text-on-surface-variant text-body-md list-disc pl-4">
+<li>Cấu trúc tốt, dạng danh sách rõ ràng, dễ copy vào slide</li>
+<li>Ví dụ thường chung chung, thiếu số liệu cụ thể</li>
+<li>Các ý đôi khi bị cụt, chưa đủ chiều sâu</li>
+</ul>
+</div>
+<div class="glass-card p-6 rounded-lg">
+<h4 class="font-bold text-white flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-[#1a73e8]">auto_awesome</span> Gemini
+                            </h4>
+<ul class="space-y-2 text-on-surface-variant text-body-md list-disc pl-4">
+<li>Câu văn tự nhiên hơn, ví dụ thực tế với tên công ty</li>
+<li>Số liệu cụ thể: Samsung, Rolls-Royce, con số thực</li>
+<li>Phần so sánh còn thiếu logic nhân quả, cần tự viết lại</li>
+</ul>
+</div>
+</div>
+<!-- What worked & Limitations -->
+<div class="section-label"><span class="material-symbols-outlined">fact_check</span> AI LÀM TỐT &amp; CHƯA TỐT</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="glass-card p-6 rounded-lg border-l-4 border-green-400 border-green-400/80 shadow-[0_0_24px_rgba(74,222,128,0.08)]">
+<h4 class="font-bold text-green-400 mb-4">AI LÀM TỐT</h4>
+<ul class="space-y-3">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-green-400 scale-75">trending_up</span>
+<p class="text-on-surface-variant text-body-md">Tổng hợp kiến thức nhanh, có cấu trúc trong vài phút</p>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-green-400 scale-75">trending_up</span>
+<p class="text-on-surface-variant text-body-md">Gemini cung cấp case study khó tìm thủ công</p>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-green-400 scale-75">trending_up</span>
+<p class="text-on-surface-variant text-body-md">Canva AI tạo infographic màu sắc phù hợp, bộ cục hiện đại</p>
+</li>
+</ul>
+</div>
+<div class="glass-card p-6 rounded-lg border-l-4 border-red-500">
+<h4 class="font-bold text-red-400 mb-4">CÒN HẠN CHẾ</h4>
+<ul class="space-y-3">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-red-400 scale-75">warning</span>
+<p class="text-on-surface-variant text-body-md">ChatGPT đưa số liệu không rõ nguồn — cần kiểm chứng</p>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-red-400 scale-75">warning</span>
+<p class="text-on-surface-variant text-body-md">Canva AI tạo ảnh quá trừu tượng, mang phong cách phương Tây</p>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-red-400 scale-75">warning</span>
+<p class="text-on-surface-variant text-body-md">Không thể thay thế tư duy phân tích của con người</p>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Ethical Issues -->
+<section class="mb-section-gap">
+<div class="section-label"><span class="material-symbols-outlined">policy</span> VẤN ĐỀ ĐẠO ĐỨC KHI DÙNG AI</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<div class="glass-card p-6 rounded-lg">
+<span class="material-symbols-outlined text-secondary mb-4">school</span>
+<h4 class="font-bold text-white mb-2">Liêm chính học thuật</h4>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Ghi rõ trong phụ lục cách sử dụng từng công cụ AI, không "giấu" đi. Minh bạch trong quá trình tạo ra sản phẩm.</p>
+</div>
+<div class="glass-card p-6 rounded-lg">
+<span class="material-symbols-outlined text-secondary mb-4">error</span>
+<h4 class="font-bold text-white mb-2">Nguy cơ thông tin sai lệch</h4>
+<p class="text-code-sm font-code-sm text-on-surface-variant">AI có thể tự tin đưa thông tin không chính xác. Người dùng có trách nhiệm kiểm chứng từ nguồn chính thống.</p>
+</div>
+<div class="glass-card p-6 rounded-lg">
+<span class="material-symbols-outlined text-secondary mb-4">copyright</span>
+<h4 class="font-bold text-white mb-2">Vấn đề bản quyền</h4>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Chỉ dùng AI để gợi ý ý tưởng, không lấy nguyên văn. Luôn chỉnh sửa và bổ sung thêm nội dung của nhóm.</p>
+</div>
+<div class="glass-card p-6 rounded-lg">
+<span class="material-symbols-outlined text-secondary mb-4">block</span>
+<h4 class="font-bold text-white mb-2">Tránh phụ thuộc AI</h4>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Copy paste mà không hiểu nội dung sẽ không trả lời được câu hỏi khi trình bày. AI hỗ trợ, không thay thế.</p>
+</div>
+</div>
+</section>
+<!-- Illustration Screenshots -->
+<section class="mb-section-gap">
+<div class="section-label"><span class="material-symbols-outlined">image</span> ẢNH CHỤP MINH HỌA</div>
+<div class="proof-grid">
+<div class="glass-card rounded-lg p-6 text-center group overflow-hidden proof-card proof-card-top">
+<div class="aspect-video bg-surface-container flex items-center justify-center mb-4 overflow-hidden rounded">
+<img class="proof-image" src="../resources/images/proofs/project5/layout.png" alt="ChatGPT tạo cấu trúc bài thuyết trình">
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">ChatGPT tạo cấu trúc bài thuyết trình</p>
+</div>
+<div class="glass-card rounded-lg p-6 text-center group overflow-hidden proof-card proof-card-top">
+<div class="aspect-video bg-surface-container flex items-center justify-center mb-4 overflow-hidden rounded">
+<img class="proof-image" src="../resources/images/proofs/project5/predictmaintainance.png" alt="Gemini giải thích bảo trì dự đoán">
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Gemini giải thích bảo trì dự đoán</p>
+</div>
+<div class="glass-card rounded-lg p-6 text-center group overflow-hidden proof-card proof-card-top">
+<div class="aspect-video bg-surface-container flex items-center justify-center mb-4 overflow-hidden rounded">
+<img class="proof-image" src="../resources/images/proofs/project5/AIcheck.png" alt="Gemini giải thích kiểm tra chất lượng">
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Gemini giải thích kiểm tra chất lượng</p>
+</div>
+<div class="glass-card rounded-lg p-6 text-center group overflow-hidden proof-card proof-card-bottom-left">
+<div class="aspect-video bg-surface-container flex items-center justify-center mb-4 overflow-hidden rounded">
+<img class="proof-image" src="../resources/images/proofs/project5/copilot.png" alt="ChatGPT làm rõ GitHub Copilot">
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">ChatGPT làm rõ GitHub Copilot</p>
+</div>
+<div class="glass-card rounded-lg p-6 text-center group overflow-hidden proof-card proof-card-bottom-right">
+<div class="aspect-video bg-surface-container flex items-center justify-center mb-4 overflow-hidden rounded">
+<img class="proof-image" src="../resources/images/proofs/project5/canvaAI.png" alt="Canva AI - Infographic kết quả">
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Canva AI — Infographic kết quả</p>
+</div>
+</div>
+</section>
+<!-- Demo Video -->
+<section class="mb-section-gap">
+<div class="section-label"><span class="material-symbols-outlined">smart_display</span> VIDEO MINH HỌA</div>
+<div class="glass-card rounded-lg overflow-hidden border border-white/10">
+<div class="px-6 py-4 border-b border-white/10 bg-surface-container-low">
+<p class="font-label-caps text-label-caps text-primary">Sản phẩm</p>
+</div>
+<div class="aspect-video">
+<iframe class="w-full h-full" src="https://www.youtube.com/embed/6LEQYqXUtOs" title="Sản phẩm" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+<div class="px-6 py-4 border-t border-white/10 bg-surface-container-low flex justify-end">
+<a class="inline-flex items-center gap-2 font-label-caps text-label-caps text-primary hover:text-secondary transition-colors" href="https://www.youtube.com/watch?v=6LEQYqXUtOs" target="_blank" rel="noopener noreferrer">
+<span>Xem trên YouTube</span>
+<span class="material-symbols-outlined text-[18px]">open_in_new</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Lessons Learned -->
+<section class="mb-section-gap">
+<div class="section-label"><span class="material-symbols-outlined">task_alt</span> BÀI HỌC RÚT RA</div>
+<div class="glass-card p-8 rounded-lg space-y-6">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary mt-1">trending_flat</span>
+<p class="text-on-surface text-body-md"><span class="font-bold text-white">Kết hợp đúng công cụ đúng việc:</span> ChatGPT xây khung, Gemini phát triển nội dung, Canva AI thiết kế — hiệu quả cao hơn dùng một công cụ cho tất cả.</p>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary mt-1">trending_flat</span>
+<p class="text-on-surface text-body-md"><span class="font-bold text-white">Kiểm chứng là bắt buộc:</span> Luôn kiểm chứng số liệu và thông tin kỹ thuật từ nguồn chính thống trước khi đưa vào sản phẩm.</p>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary mt-1">trending_flat</span>
+<p class="text-on-surface text-body-md"><span class="font-bold text-white">Sử dụng AI có trách nhiệm:</span> Minh bạch, không copy nguyên văn, hiểu rõ nội dung mình trình bày.</p>
+</div>
+</div>
+</section>
+</main>
+  <div class="final-actions">
+    <div class="final-download-row">
+      <a class="doc-download-btn" href="../resources/docs/Chuong 5.pdf" download="Chuong 5.pdf" target="_blank" rel="noopener noreferrer" type="application/pdf">
+        <span class="pdf-icon material-symbols-outlined">picture_as_pdf</span>
+        <span>Download PDF</span>
+      </a>
+    </div>
+    <div class="final-nav-row">
+      <a class="final-back-button" href="project4.html">
+        <span class="material-symbols-outlined">arrow_back</span>
+        <span>Quay l&#7841;i d&#7921; &#225;n tr&#432;&#7899;c</span>
+      </a>
+      <a class="next-lesson-btn" href="project6.html">
+        <span>Ti&#7871;p t&#7909;c d&#7921; &#225;n k&#7871; ti&#7871;p</span>
+        <span class="material-symbols-outlined">arrow_forward</span>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="image-lightbox" id="imageLightbox" aria-hidden="true">
+  <button type="button" id="lightboxClose" aria-label="Đóng ảnh phóng to"><span class="material-symbols-outlined">close</span></button>
+  <img id="lightboxImage" src="" alt="Ảnh phóng to">
+</div>
+<script>
+        const lightbox = document.getElementById('imageLightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+        let zoomLevel = 1;
+        let panX = 0;
+        let panY = 0;
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+
+        const applyImageTransform = () => {
+            lightboxImage.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+        };
+
+        const resetImageTransform = () => {
+            zoomLevel = 1;
+            panX = 0;
+            panY = 0;
+            applyImageTransform();
+        };
+
+        document.querySelectorAll('.proof-image').forEach((image) => {
+            image.addEventListener('click', () => {
+                lightboxImage.src = image.src;
+                lightboxImage.alt = image.alt;
+                resetImageTransform();
+                lightbox.classList.add('is-open');
+                lightbox.setAttribute('aria-hidden', 'false');
+            });
+        });
+
+        const closeLightbox = () => {
+            lightbox.classList.remove('is-open');
+            lightbox.setAttribute('aria-hidden', 'true');
+            lightboxImage.src = '';
+            resetImageTransform();
+        };
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('wheel', (event) => {
+            if (!lightbox.classList.contains('is-open')) return;
+            event.preventDefault();
+            const delta = event.deltaY < 0 ? 0.14 : -0.14;
+            zoomLevel = Math.min(4, Math.max(0.6, zoomLevel + delta));
+            if (zoomLevel <= 1) {
+                panX = 0;
+                panY = 0;
+            }
+            applyImageTransform();
+        }, { passive: false });
+        lightboxImage.addEventListener('mousedown', (event) => {
+            if (zoomLevel <= 1) return;
+            isDragging = true;
+            dragStartX = event.clientX - panX;
+            dragStartY = event.clientY - panY;
+            lightboxImage.classList.add('is-dragging');
+        });
+        document.addEventListener('mousemove', (event) => {
+            if (!isDragging) return;
+            panX = event.clientX - dragStartX;
+            panY = event.clientY - dragStartY;
+            applyImageTransform();
+        });
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            lightboxImage.classList.remove('is-dragging');
+        });
+        lightboxImage.addEventListener('dblclick', resetImageTransform);
+        lightbox.addEventListener('click', (event) => {
+            if (event.target === lightbox) closeLightbox();
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+        });
+
+        const motionObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('is-visible');
+                motionObserver.unobserve(entry.target);
+            });
+        }, { threshold: 0.16 });
+
+        document.querySelectorAll('header, .glass-card, table, .proof-card, iframe').forEach((item, index) => {
+            item.classList.add('motion-card');
+            item.classList.add(index % 2 === 0 ? 'from-left' : 'from-right');
+            item.style.transitionDelay = `${Math.min(index * 38, 260)}ms`;
+            motionObserver.observe(item);
+        });
+    </script>
+</body></html>

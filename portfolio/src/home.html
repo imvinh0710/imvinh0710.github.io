@@ -1,0 +1,329 @@
+﻿<!DOCTYPE html><html class="dark" lang="vi" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Trang chủ - VINHTRAN</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#00363a",
+                        "secondary-fixed-dim": "#00dbe9",
+                        "primary-fixed-dim": "#ecb2ff",
+                        "surface": "#131317",
+                        "on-tertiary-fixed-variant": "#454652",
+                        "tertiary": "#c6c5d4",
+                        "surface-container": "#1f1f23",
+                        "inverse-on-surface": "#303034",
+                        "surface-container-high": "#2a292e",
+                        "outline-variant": "#514255",
+                        "primary": "#ecb2ff",
+                        "error": "#ffb4ab",
+                        "on-primary": "#520071",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#39393d",
+                        "on-tertiary-fixed": "#1a1b26",
+                        "on-tertiary-container": "#ffffff",
+                        "surface-variant": "#353439",
+                        "inverse-surface": "#e4e1e7",
+                        "on-primary-fixed-variant": "#74009f",
+                        "on-secondary-fixed-variant": "#004f54",
+                        "primary-fixed": "#f8d8ff",
+                        "background": "#131317",
+                        "surface-container-low": "#1b1b1f",
+                        "tertiary-container": "#757583",
+                        "on-secondary-fixed": "#002022",
+                        "secondary": "#d3fbff",
+                        "on-primary-fixed": "#320047",
+                        "on-secondary-container": "#00686f",
+                        "surface-container-lowest": "#0e0e12",
+                        "error-container": "#93000a",
+                        "secondary-fixed": "#7df4ff",
+                        "on-surface": "#e4e1e7",
+                        "surface-container-highest": "#353439",
+                        "surface-dim": "#131317",
+                        "on-background": "#e4e1e7",
+                        "on-primary-container": "#ffffff",
+                        "outline": "#9d8ba0",
+                        "on-tertiary": "#2f303b",
+                        "on-surface-variant": "#d4c0d7",
+                        "inverse-primary": "#9900cf",
+                        "surface-tint": "#ecb2ff",
+                        "tertiary-fixed": "#e2e1f1",
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#c6c5d4",
+                        "primary-container": "#bd00ff",
+                        "secondary-container": "#00eefc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "container-max": "1280px",
+                        "section-gap": "120px",
+                        "unit": "8px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Geist"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "body-md": ["Inter"],
+                        "code-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "code-sm": ["14px", { "lineHeight": "20px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #050505;
+            color: theme('colors.on-background');
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .glass-panel {
+            background: rgba(18, 18, 23, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-panel:hover {
+            box-shadow: inset 0 0 20px rgba(189, 0, 255, 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, theme('colors.primary'), theme('colors.secondary-container'));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 9999;
+            position: absolute;
+            pointer-events: none;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(189, 0, 255, 0.1) 50%, rgba(0, 0, 0, 0) 100%);
+            opacity: 0.1;
+            animation: scanline 8s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { top: -100px; }
+            100% { top: 100%; }
+        }
+
+        .glow-button {
+            transition: all 0.3s ease;
+        }
+        .glow-button:hover {
+            box-shadow: 0 0 15px rgba(189, 0, 255, 0.5);
+        }
+
+        /* Abstract grid background */
+        .bg-grid-pattern {
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .hero-intro {
+            transform-origin: left center;
+            opacity: 0;
+            transform: translateY(150px) scale(1.08);
+            transition: opacity 0.5s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .hero-ready .hero-intro {
+            opacity: 1;
+        }
+
+        .hero-lift .hero-intro {
+            transform: translateY(0) scale(1);
+        }
+
+        .hero-reveal {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .hero-show-copy .delay-copy,
+        .hero-show-actions .delay-actions {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .top-nav-link {
+            position: relative;
+            display: inline-flex;
+            padding: 6px 0;
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+
+        .top-nav-link::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            right: 50%;
+            bottom: 0;
+            height: 2px;
+            background: currentColor;
+            border-radius: 999px;
+            transition: left 0.28s ease, right 0.28s ease;
+        }
+
+        .top-nav-link:hover {
+            transform: translateY(-4px);
+            color: #d3fbff;
+        }
+
+        .top-nav-link:hover::after {
+            left: 0;
+            right: 0;
+        }
+
+        .top-nav-link.is-active::after {
+            left: 0;
+            right: 0;
+        }
+
+        .top-connect {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .top-connect::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.28) 45%, transparent 58%);
+            transform: translateX(-130%);
+            transition: transform 0.55s ease;
+        }
+
+        .top-connect:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 22px rgba(189,0,255,0.55), 0 0 40px rgba(211,251,255,0.18);
+        }
+
+        .top-connect:hover::before {
+            transform: translateX(130%);
+        }
+
+        .top-connect .material-symbols-outlined {
+            transition: transform 0.25s ease;
+        }
+
+        .top-connect:hover .material-symbols-outlined {
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col bg-grid-pattern relative">
+<div class="scanline"></div>
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 right-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-white/5 shadow-none">
+<div class="flex justify-between items-center w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop h-full">
+<a class="font-display-lg text-headline-lg-mobile md:text-headline-lg text-primary tracking-tighter cursor-pointer hover:neon-glow-text transition-all" href="home.html">VINHTRAN</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="top-nav-link text-on-surface-variant font-medium font-body-md" href="info.html">Thông tin</a>
+<a class="top-nav-link text-on-surface-variant font-medium font-body-md" href="project.html">Dự án</a>
+<a class="top-nav-link text-on-surface-variant font-medium font-body-md" href="summary.html">Tổng kết</a>
+</div>
+<a class="top-connect hidden md:flex items-center gap-2 bg-primary-container text-white px-6 py-2 rounded font-label-caps text-label-caps transition-all" href="contact.html">Connect<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_forward</span></a>
+<button class="md:hidden text-primary"><span class="material-symbols-outlined text-[32px]">menu</span></button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow pt-20 pb-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full flex flex-col gap-section-gap">
+<!-- Hero Section -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center min-h-[600px]">
+<div class="col-span-1 md:col-span-7 flex flex-col gap-6 z-10">
+
+<div class="hero-intro">
+<h1 class="font-display-lg text-display-lg md:text-headline-lg-mobile text-on-surface">
+                    Xin chào, tôi là <br>
+</h1><h1 class="font-display-lg text-display-lg md:text-headline-lg text-primary font-bold mt-2 uppercase">
+    TRẦN THẾ VINH
+</h1>
+</div>
+<p class="hero-reveal delay-copy font-body-md text-body-md text-on-surface-variant max-w-2xl leading-relaxed">Sinh viên ngành Công nghệ thông tin với niềm đam mê mãnh liệt trong việc kiến tạo những giao diện UI/UX tinh tế. Tôi yêu thích việc chinh phục những dòng code phức tạp để biến chúng thành những khối giao diện 2D bắt mắt, tối ưu hóa trải nghiệm người dùng và đưa tính thẩm mỹ vào từng pixel.</p>
+<div class="hero-reveal delay-actions flex gap-4 mt-4">
+<a class="bg-primary-container text-white px-8 py-3 rounded-DEFAULT font-label-caps text-label-caps glow-button uppercase flex items-center gap-2" href="project.html">
+<span class="material-symbols-outlined text-[18px]">terminal</span> Khám phá dự án
+                    </a>
+</div><div class="mt-8 flex flex-wrap gap-3">
+    
+    
+    
+    
+    
+</div>
+
+</div>
+<div class="col-span-1 md:col-span-5 flex justify-center relative">
+<!-- Decorative element behind image -->
+<div class="absolute inset-0 bg-primary/20 blur-[100px] rounded-full z-0"></div>
+<div class="glass-panel p-4 rounded-xl z-10 relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary-container transform -translate-x-full group-hover:translate-x-0 transition-transform duration-700"></div>
+<img alt="Cyberpunk programmer portrait" class="w-full h-auto aspect-square object-cover rounded-lg filter grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500" data-alt="A highly atmospheric, cinematic portrait of a programmer sitting in a dark, tech-oriented workspace. The scene is illuminated by the soft, glowing light of multiple monitors displaying green and purple code. The aesthetic is cyber-sophisticated, with deep blacks and neon purple accents. The mood is focused, mysterious, and highly technical, avoiding clichéd 80s neon in favor of a sleek, modern 'dark mode' design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzpar3vwNVcMh3LDwhiU-FJSaMHmkT2mCywOhZhPBB5Oye97FafD-P3xRs0bjdDEFz--8HloQVGGcalVARyJwqfl1lmppZmPKqRIPGa8uS3HqMAAtztPiS3LBAV1IJvrkx44EtI_VnGYd9_0UJX3fEvewlnDusOekThBuFoSUwhFZk44kjZ8UMbLzLIm8jHh0OLtWjl9Fphr0gJTg0mkzpSM0CzhZNOjGa6qhU_Hhu-LJt62zmoX6tY_xEKgPIPqVCSqHOZeOiIAg">
+<div class="absolute bottom-6 left-6 font-code-sm text-code-sm text-secondary bg-surface-container-highest/80 px-2 py-1 rounded border border-white/10 backdrop-blur-sm">
+                        STATUS: ONLINE
+                    </div>
+</div>
+</div>
+</section>
+<!-- Bento Grid: Mục tiêu & Định hướng -->
+
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-white/5 w-full py-unit px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-4 mt-auto relative z-10"></footer>
+
+<script>
+    window.addEventListener('load', () => {
+        const body = document.body;
+        body.classList.remove('hero-ready', 'hero-lift', 'hero-show-copy', 'hero-show-actions');
+        setTimeout(() => body.classList.add('hero-ready'), 120);
+        setTimeout(() => body.classList.add('hero-lift'), 1200);
+        setTimeout(() => body.classList.add('hero-show-copy'), 2050);
+        setTimeout(() => body.classList.add('hero-show-actions'), 2450);
+    });
+</script>
+
+
+
+
+
+
+
+
+</body></html>

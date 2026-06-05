@@ -1,0 +1,460 @@
+﻿<!DOCTYPE html><html class="dark" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Dự án - CIPHER.LOG</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#00363a",
+                        "secondary-fixed-dim": "#00dbe9",
+                        "primary-fixed-dim": "#ecb2ff",
+                        "surface": "#131317",
+                        "on-tertiary-fixed-variant": "#454652",
+                        "tertiary": "#c6c5d4",
+                        "surface-container": "#1f1f23",
+                        "inverse-on-surface": "#303034",
+                        "surface-container-high": "#2a292e",
+                        "outline-variant": "#514255",
+                        "primary": "#ecb2ff",
+                        "error": "#ffb4ab",
+                        "on-primary": "#520071",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#39393d",
+                        "on-tertiary-fixed": "#1a1b26",
+                        "on-tertiary-container": "#ffffff",
+                        "surface-variant": "#353439",
+                        "inverse-surface": "#e4e1e7",
+                        "on-primary-fixed-variant": "#74009f",
+                        "on-secondary-fixed-variant": "#004f54",
+                        "primary-fixed": "#f8d8ff",
+                        "background": "#131317",
+                        "surface-container-low": "#1b1b1f",
+                        "tertiary-container": "#757583",
+                        "on-secondary-fixed": "#002022",
+                        "secondary": "#d3fbff",
+                        "on-primary-fixed": "#320047",
+                        "on-secondary-container": "#00686f",
+                        "surface-container-lowest": "#0e0e12",
+                        "error-container": "#93000a",
+                        "secondary-fixed": "#7df4ff",
+                        "on-surface": "#e4e1e7",
+                        "surface-container-highest": "#353439",
+                        "surface-dim": "#131317",
+                        "on-background": "#e4e1e7",
+                        "on-primary-container": "#ffffff",
+                        "outline": "#9d8ba0",
+                        "on-tertiary": "#2f303b",
+                        "on-surface-variant": "#d4c0d7",
+                        "inverse-primary": "#9900cf",
+                        "surface-tint": "#ecb2ff",
+                        "tertiary-fixed": "#e2e1f1",
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#c6c5d4",
+                        "primary-container": "#bd00ff",
+                        "secondary-container": "#00eefc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "container-max": "1280px",
+                        "section-gap": "120px",
+                        "unit": "8px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Geist"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "body-md": ["Inter"],
+                        "code-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "code-sm": ["14px", { "lineHeight": "20px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #050505;
+            color: #e4e1e7;
+        }
+        
+        .glass-panel {
+            background: rgba(18, 18, 23, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .project-card:hover {
+            border-image: linear-gradient(to right, #bd00ff, #00eefc) 1;
+            box-shadow: inset 0 0 20px rgba(189, 0, 255, 0.1);
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at top left, rgba(189, 0, 255, 0.05), transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .project-card {
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .project-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.12) 45%, transparent 62%);
+            transform: translateX(-130%);
+            transition: transform 0.7s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(236,178,255,0.5);
+            box-shadow: 0 18px 50px rgba(0,0,0,0.35), inset 0 0 24px rgba(189, 0, 255, 0.12), 0 0 22px rgba(0,238,252,0.08);
+        }
+
+        .project-card:hover::after {
+            transform: translateX(130%);
+        }
+
+        .project-card .material-symbols-outlined[data-icon] {
+            transition: transform 0.3s ease, color 0.25s ease, text-shadow 0.25s ease;
+        }
+
+        .project-card:hover .material-symbols-outlined[data-icon] {
+            transform: translateY(-4px) rotate(-6deg) scale(1.08);
+            text-shadow: 0 0 16px currentColor;
+        }
+
+        .project-card h3 {
+            transition: color 0.25s ease;
+        }
+
+        .project-card:hover h3 {
+            color: #f8d8ff;
+        }
+
+        .project-open-cue {
+            opacity: 0;
+            transform: translateX(-8px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        .project-card:hover .project-open-cue {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .doc-download-btn {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(255, 90, 95, 0.16), rgba(189, 0, 255, 0.08));
+            border: 1px solid rgba(255, 90, 95, 0.46);
+            color: #ffe1e2;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, color 0.22s ease;
+        }
+
+        .doc-download-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.18) 45%, transparent 60%);
+            transform: translateX(-130%);
+            transition: transform 0.55s ease;
+        }
+
+        .doc-download-btn:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 90, 95, 0.9);
+            color: #ffffff;
+            box-shadow: 0 0 18px rgba(255,90,95,0.32), 0 0 30px rgba(189,0,255,0.12);
+        }
+
+        .doc-download-btn:hover::before {
+            transform: translateX(130%);
+        }
+
+        .pdf-icon {
+            font-size: 18px;
+            color: #ff5a5f;
+            filter: drop-shadow(0 0 8px rgba(255,90,95,0.45));
+        }
+
+        .doc-download-btn > * {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .terminal-grid {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .top-nav-link {
+            position: relative;
+            display: inline-flex;
+            padding: 6px 0;
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+
+        .top-nav-link::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            right: 50%;
+            bottom: 0;
+            height: 2px;
+            background: currentColor;
+            border-radius: 999px;
+            transition: left 0.28s ease, right 0.28s ease;
+        }
+
+        .top-nav-link:hover {
+            transform: translateY(-4px);
+            color: #d3fbff;
+        }
+
+        .top-nav-link:hover::after {
+            left: 0;
+            right: 0;
+        }
+
+        .top-nav-link.is-active::after {
+            left: 0;
+            right: 0;
+        }
+
+        .top-connect {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .top-connect::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.28) 45%, transparent 58%);
+            transform: translateX(-130%);
+            transition: transform 0.55s ease;
+        }
+
+        .top-connect:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 22px rgba(189,0,255,0.55), 0 0 40px rgba(211,251,255,0.18);
+        }
+
+        .top-connect:hover::before {
+            transform: translateX(130%);
+        }
+
+        .top-connect .material-symbols-outlined {
+            transition: transform 0.25s ease;
+        }
+
+        .top-connect:hover .material-symbols-outlined {
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col terminal-grid relative font-body-md text-body-md">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 right-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-white/5 shadow-none">
+<div class="flex justify-between items-center w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop h-full">
+<a class="font-display-lg text-headline-lg-mobile md:text-headline-lg text-primary tracking-tighter cursor-pointer hover:neon-glow-text transition-all" href="home.html">VINHTRAN</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="top-nav-link text-on-surface-variant font-medium font-body-md" href="info.html">Thông tin</a>
+<a class="top-nav-link is-active text-primary font-bold font-body-md" href="project.html">Dự án</a>
+<a class="top-nav-link text-on-surface-variant font-medium font-body-md" href="summary.html">Tổng kết</a>
+</div>
+<a class="top-connect hidden md:flex items-center gap-2 bg-primary-container text-white px-6 py-2 rounded font-label-caps text-label-caps transition-all" href="contact.html">Connect<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_forward</span></a>
+<button class="md:hidden text-primary"><span class="material-symbols-outlined text-[32px]">menu</span></button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow pt-[120px] pb-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full z-10 relative">
+<header class="mb-16">
+<h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg text-on-surface mb-4">DỮ LIỆU DỰ ÁN</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl border-l-2 border-secondary pl-4">
+                Kho lưu trữ 06 dự án báo cáo cá nhân đã hoàn thành trong học phần Nhập môn Công nghệ số và Trí tuệ Nhân tạo.
+            </p>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl border-l-2 border-secondary pl-4">
+                Mục tiêu: Hệ thống hóa lại các dự án, các báo cáo đã thực hiện trong học phần Nhập môn công nghệ số và trí tuệ nhân tạo, đánh giá được mức độ rèn luyện của bản thân và những năng lực số hữu ích đã học hỏi được thông qua quá trình hoàn thiện các dự án.
+            </p>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Project 1 -->
+<article class="glass-panel project-card rounded-lg p-6 relative overflow-hidden flex flex-col group transition-all duration-300 hover:-translate-y-1" data-project-url="project1.html" role="link" tabindex="0">
+<div class="flex justify-between items-start mb-4 z-10">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="computer">computer</span>
+</div>
+<h3 class="font-headline-lg text-[24px] leading-[32px] font-bold text-on-surface mb-2 z-10">Chương 1: Máy tính và thiết bị ngoại vi</h3>
+<div class="mb-4 z-10 flex-grow">
+<p class="font-code-sm text-code-sm text-on-surface-variant mb-2"><span class="text-primary">&gt; Mục tiêu:</span> </p>
+<p class="font-body-md text-[14px] text-tertiary">Nắm được các thao tác cơ bản khi thao tác với thư mục và tệp tin trên hệ điều hành máy tính, quản lí tệp tin thành thạo</p>
+</div>
+<div class="mt-auto z-10 flex items-center justify-between gap-3">
+<a class="doc-download-btn inline-flex items-center gap-2 font-label-caps text-label-caps px-3 py-2 rounded" href="../resources/docs/Chuong 1.pdf" download="Chuong 1.pdf" target="_blank" rel="noopener noreferrer" type="application/pdf">
+<span class="pdf-icon material-symbols-outlined">picture_as_pdf</span><span>Download</span>
+                    </a>
+<span class="project-open-cue material-symbols-outlined text-secondary text-[20px]">arrow_forward</span>
+</div>
+</article>
+<!-- Project 2 -->
+<article class="glass-panel project-card rounded-lg p-6 relative overflow-hidden flex flex-col group transition-all duration-300 hover:-translate-y-1" data-project-url="project2.html" role="link" tabindex="0">
+<div class="flex justify-between items-start mb-4 z-10">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="database">database</span>
+</div>
+<h3 class="font-headline-lg text-[24px] leading-[32px] font-bold text-on-surface mb-2 z-10">Chương 2: Khai thác dữ liệu &amp; thông tin</h3>
+<div class="mb-4 z-10 flex-grow">
+<p class="font-code-sm text-code-sm text-on-surface-variant mb-2"><span class="text-primary">&gt; Mục tiêu:</span></p>
+<p class="font-body-md text-[14px] text-tertiary">Phát triển kỹ năng tìm kiếm và đánh giá thông tin học thuật từ các nguồn đáng tin cậy.</p>
+</div>
+<div class="mt-auto z-10 flex items-center justify-between gap-3">
+<a class="doc-download-btn inline-flex items-center gap-2 font-label-caps text-label-caps px-3 py-2 rounded" href="../resources/docs/Chuong 2.pdf" download="Chuong 2.pdf" target="_blank" rel="noopener noreferrer" type="application/pdf">
+<span class="pdf-icon material-symbols-outlined">picture_as_pdf</span><span>Download</span>
+                    </a>
+<span class="project-open-cue material-symbols-outlined text-secondary text-[20px]">arrow_forward</span>
+</div>
+</article>
+<!-- Project 3 -->
+<article class="glass-panel project-card rounded-lg p-6 relative overflow-hidden flex flex-col group transition-all duration-300 hover:-translate-y-1 md:col-span-2 lg:col-span-1" data-project-url="project3.html" role="link" tabindex="0">
+<div class="flex justify-between items-start mb-4 z-10">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="psychology">psychology</span>
+</div>
+<h3 class="font-headline-lg text-[24px] leading-[32px] font-bold text-on-surface mb-2 z-10">Chương 3: Tổng quan về Trí tuệ nhân tạo</h3>
+<div class="mb-4 z-10 flex-grow">
+<p class="font-code-sm text-code-sm text-on-surface-variant mb-2"><span class="text-primary">&gt; Mục tiêu:</span></p>
+<p class="font-body-md text-[14px] text-tertiary"> Phát triển kỹ năng viết prompt hiệu quả để tận dụng tối đa khả năng của các mô hình ngôn ngữ lớn trong học tập</p>
+</div>
+<div class="mt-auto z-10 flex items-center justify-between gap-3">
+<a class="doc-download-btn inline-flex items-center gap-2 font-label-caps text-label-caps px-3 py-2 rounded" href="../resources/docs/Chuong 3.pdf" download="Chuong 3.pdf" target="_blank" rel="noopener noreferrer" type="application/pdf">
+<span class="pdf-icon material-symbols-outlined">picture_as_pdf</span><span>Download</span>
+                    </a>
+<span class="project-open-cue material-symbols-outlined text-secondary text-[20px]">arrow_forward</span>
+</div>
+</article>
+<!-- Project 4 -->
+<article class="glass-panel project-card rounded-lg p-6 relative overflow-hidden flex flex-col group transition-all duration-300 hover:-translate-y-1" data-project-url="project4.html" role="link" tabindex="0">
+<div class="flex justify-between items-start mb-4 z-10">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="hub">hub</span>
+</div>
+<h3 class="font-headline-lg text-[24px] leading-[32px] font-bold text-on-surface mb-2 z-10">Chương 4: Giao tiếp &amp; Hợp tác trong môi trường số</h3>
+<div class="mb-4 z-10 flex-grow">
+<p class="font-code-sm text-code-sm text-on-surface-variant mb-2"><span class="text-primary">&gt; Mục tiêu:</span></p>
+<p class="font-body-md text-[14px] text-tertiary">Thành thạo các công cụ hợp tác trực tuyến và thể hiện năng lực quản lý, điều phối cá nhân trong dự án nhóm.</p>
+</div>
+<div class="mt-auto z-10 flex items-center justify-between gap-3">
+<a class="doc-download-btn inline-flex items-center gap-2 font-label-caps text-label-caps px-3 py-2 rounded" href="../resources/docs/Chuong 4.pdf" download="Chuong 4.pdf" target="_blank" rel="noopener noreferrer" type="application/pdf">
+<span class="pdf-icon material-symbols-outlined">picture_as_pdf</span><span>Download</span>
+                    </a>
+<span class="project-open-cue material-symbols-outlined text-secondary text-[20px]">arrow_forward</span>
+</div>
+</article>
+<!-- Project 5 -->
+<article class="glass-panel project-card rounded-lg p-6 relative overflow-hidden flex flex-col group transition-all duration-300 hover:-translate-y-1" data-project-url="project5.html" role="link" tabindex="0">
+<div class="flex justify-between items-start mb-4 z-10">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="design_services">design_services</span>
+</div>
+<h3 class="font-headline-lg text-[24px] leading-[32px] font-bold text-on-surface mb-2 z-10">Chương 5: Sáng tạo nội dung số</h3>
+<div class="mb-4 z-10 flex-grow">
+<p class="font-code-sm text-code-sm text-on-surface-variant mb-2"><span class="text-primary">&gt; Mục tiêu:</span></p>
+<p class="font-body-md text-[14px] text-tertiary">Thành thạo việc sử dụng các công cụ AI tạo sinh để hỗ trợ quá trình sáng tạo nội dung số.</p>
+</div>
+<div class="mt-auto z-10 flex items-center justify-between gap-3">
+<a class="doc-download-btn inline-flex items-center gap-2 font-label-caps text-label-caps px-3 py-2 rounded" href="../resources/docs/Chuong 5.pdf" download="Chuong 5.pdf" target="_blank" rel="noopener noreferrer" type="application/pdf">
+<span class="pdf-icon material-symbols-outlined">picture_as_pdf</span><span>Download</span>
+                    </a>
+<span class="project-open-cue material-symbols-outlined text-secondary text-[20px]">arrow_forward</span>
+</div>
+</article>
+<!-- Project 6 -->
+<article class="glass-panel project-card rounded-lg p-6 relative overflow-hidden flex flex-col group transition-all duration-300 hover:-translate-y-1" data-project-url="project6.html" role="link" tabindex="0">
+<div class="flex justify-between items-start mb-4 z-10">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-error transition-colors" data-icon="security">security</span>
+</div>
+<h3 class="font-headline-lg text-[24px] leading-[32px] font-bold text-on-surface mb-2 z-10">Chương 6: An toàn &amp; Liêm chính học thuật trong môi trường số</h3>
+<div class="mb-4 z-10 flex-grow">
+<p class="font-code-sm text-code-sm text-on-surface-variant mb-2"><span class="text-primary">&gt; Mục tiêu:</span></p>
+<p class="font-body-md text-[14px] text-tertiary">Phát triển kỹ năng sử dụng AI có trách nhiệm và đạo đức trong học tập và nghiên cứu.</p>
+</div>
+<div class="mt-auto z-10 flex items-center justify-between gap-3">
+<a class="doc-download-btn inline-flex items-center gap-2 font-label-caps text-label-caps px-3 py-2 rounded" href="../resources/docs/Chuong 6.pdf" download="Chuong 6.pdf" target="_blank" rel="noopener noreferrer" type="application/pdf">
+<span class="pdf-icon material-symbols-outlined">picture_as_pdf</span><span>Download</span>
+                    </a>
+<span class="project-open-cue material-symbols-outlined text-secondary text-[20px]">arrow_forward</span>
+</div>
+</article>
+</div>
+</main>
+<script>
+    const projectCards = document.querySelectorAll('.project-card');
+    const projectObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const index = Array.from(projectCards).indexOf(entry.target);
+                entry.target.style.transitionDelay = `${Math.max(index, 0) * 90}ms`;
+                entry.target.classList.add('is-visible');
+                projectObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.16 });
+
+    projectCards.forEach((card) => {
+        projectObserver.observe(card);
+        card.addEventListener('click', (event) => {
+            if (event.target.closest('a')) return;
+            window.location.href = card.dataset.projectUrl;
+        });
+        card.addEventListener('keydown', (event) => {
+            if (event.key !== 'Enter' && event.key !== ' ') return;
+            event.preventDefault();
+            window.location.href = card.dataset.projectUrl;
+        });
+    });
+</script>
+</body></html>

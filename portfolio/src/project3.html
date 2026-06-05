@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chương 3 - Tổng quan về trí tuệ nhân tạo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&amp;family=JetBrains+Mono:wght@500;700;800&amp;family=Geist:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#d3fbff",
+                    "on-secondary-fixed": "#002022",
+                    "on-surface": "#e4e1e7",
+                    "on-tertiary-fixed": "#1a1b26",
+                    "inverse-on-surface": "#303034",
+                    "secondary-container": "#00eefc",
+                    "on-error": "#690005",
+                    "inverse-primary": "#9900cf",
+                    "on-primary-fixed": "#320047",
+                    "on-surface-variant": "#d4c0d7",
+                    "inverse-surface": "#e4e1e7",
+                    "outline": "#9d8ba0",
+                    "on-tertiary-fixed-variant": "#454652",
+                    "tertiary": "#c6c5d4",
+                    "primary-fixed": "#f8d8ff",
+                    "surface-bright": "#39393d",
+                    "surface-container-highest": "#353439",
+                    "primary-container": "#bd00ff",
+                    "on-primary-container": "#ffffff",
+                    "on-secondary-container": "#00686f",
+                    "primary-fixed-dim": "#ecb2ff",
+                    "on-primary-fixed-variant": "#74009f",
+                    "tertiary-container": "#757583",
+                    "surface-dim": "#131317",
+                    "outline-variant": "#514255",
+                    "on-tertiary-container": "#ffffff",
+                    "surface-container": "#1f1f23",
+                    "primary": "#ecb2ff",
+                    "on-primary": "#520071",
+                    "error": "#ffb4ab",
+                    "background": "#131317",
+                    "on-secondary": "#00363a",
+                    "surface-tint": "#ecb2ff",
+                    "surface": "#131317",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-lowest": "#0e0e12",
+                    "error-container": "#93000a",
+                    "surface-container-low": "#1b1b1f",
+                    "secondary-fixed-dim": "#00dbe9",
+                    "surface-variant": "#353439",
+                    "tertiary-fixed-dim": "#c6c5d4",
+                    "on-tertiary": "#2f303b",
+                    "surface-container-high": "#2a292e",
+                    "on-background": "#e4e1e7",
+                    "secondary-fixed": "#7df4ff",
+                    "tertiary-fixed": "#e2e1f1",
+                    "on-secondary-fixed-variant": "#004f54"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "margin-mobile": "16px",
+                    "section-gap": "120px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "margin-desktop": "64px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "label-caps": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "code-sm": ["JetBrains Mono"],
+                    "display-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "code-sm": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "800"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #050505;
+            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.03) 1px, transparent 0);
+            background-size: 48px 48px;
+            color: #e4e1e7;
+        }
+        .glass-card {
+            background: rgba(18, 18, 23, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(189, 0, 255, 0.4);
+            box-shadow: 0 0 20px rgba(189, 0, 255, 0.1);
+        }
+        .motion-card {
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .motion-card.from-left { transform: translateX(-34px); }
+        .motion-card.from-right { transform: translateX(34px); }
+        .motion-card.is-visible { opacity: 1; transform: translate(0, 0); }
+        .neon-accent {
+            filter: drop-shadow(0 0 8px rgba(189, 0, 255, 0.6));
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+    
+
+/* Project frame shell */
+:root {
+  --frame-bg2: #161616;
+  --frame-bg3: #1e1e1e;
+  --frame-border: rgba(255,255,255,0.08);
+  --frame-text: #e4e1e7;
+  --frame-text2: #d4c0d7;
+  --frame-accent: #ecb2ff;
+}
+body {
+  background-color: #050505;
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(189, 0, 255, 0.05) 0%, transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px;
+  color: var(--frame-text);
+}
+.top-nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  height: 48px;
+  background: rgba(19,19,23,0.8);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.top-nav-inner {
+  max-width: 1280px;
+  height: 48px;
+  margin: 0 auto;
+  padding: 0 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  color: var(--frame-accent);
+  text-decoration: none;
+  font-family: 'Geist', sans-serif;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+.brand:hover { text-shadow: 0 0 10px rgba(189, 0, 255, 0.3); }
+.nav-links { display: flex; align-items: center; gap: 32px; }
+.top-nav-link {
+  position: relative;
+  display: inline-flex;
+  padding: 6px 0;
+  color: #d4c0d7;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+.top-nav-link::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  height: 2px;
+  background: currentColor;
+  border-radius: 999px;
+  transition: left 0.28s ease, right 0.28s ease;
+}
+.top-nav-link:hover { color: #d3fbff; transform: translateY(-4px); }
+.top-nav-link:hover::after, .top-nav-link.is-active::after { left: 0; right: 0; }
+.top-nav-link.is-active { color: var(--frame-accent); font-weight: 700; }
+.top-connect {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  background: #bd00ff;
+  padding: 8px 24px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.top-connect::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.28) 45%, transparent 58%);
+  transform: translateX(-130%);
+  transition: transform 0.55s ease;
+}
+.top-connect:hover { transform: translateY(-3px); box-shadow: 0 0 22px rgba(189,0,255,0.55), 0 0 40px rgba(211,251,255,0.18); }
+.top-connect:hover::before { transform: translateX(130%); }
+.top-connect .material-symbols-outlined { transition: transform 0.25s ease; }
+.top-connect:hover .material-symbols-outlined { transform: translateX(5px); }
+.page { width: 100%; max-width: 1280px; margin: 0 auto; padding: 128px 64px 0; }
+.frame-back-button,
+.doc-download-btn,
+.next-lesson-btn,
+.final-back-button {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  border: 1px solid var(--frame-border);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+}
+.frame-back-button {
+  color: var(--frame-text2);
+  background: rgba(31,31,35,0.5);
+  margin-bottom: 32px;
+  width: fit-content;
+  border-radius: 4px;
+}
+.frame-back-button:hover { color: var(--frame-accent); border-color: rgba(236,178,255,0.45); background: rgba(31,31,35,0.85); transform: translateX(-4px); }
+.doc-download-btn {
+  gap: 12px;
+  padding: 16px 32px;
+  color: #ffe1e2;
+  background: linear-gradient(135deg, rgba(255, 90, 95, 0.16), rgba(189, 0, 255, 0.08));
+  border-color: rgba(255, 90, 95, 0.46);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+}
+.doc-download-btn::before,
+.next-lesson-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.2) 45%, transparent 60%);
+  transform: translateX(-130%);
+  transition: transform 0.55s ease;
+}
+.doc-download-btn:hover { color: #ffffff; transform: translateY(-3px); border-color: rgba(255, 90, 95, 0.9); box-shadow: 0 0 18px rgba(255,90,95,0.32), 0 0 30px rgba(189,0,255,0.12); }
+.doc-download-btn:hover::before,
+.next-lesson-btn:hover::before { transform: translateX(130%); }
+.doc-download-btn > *, .next-lesson-btn > * { position: relative; z-index: 1; }
+.pdf-icon { color: #ff5a5f; filter: drop-shadow(0 0 8px rgba(255,90,95,0.45)); }
+.next-lesson-btn {
+  gap: 8px;
+  padding: 16px 40px;
+  background: #bd00ff;
+  color: #ffffff;
+  border-color: #bd00ff;
+  box-shadow: 0 0 20px rgba(189, 0, 255, 0.4);
+  isolation: isolate;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+.next-lesson-btn::before { z-index: 0; }
+.next-lesson-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(189, 0, 255, 0.6); }
+.next-lesson-btn:active { transform: scale(0.95); }
+.project-content { margin-top: 0; }
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--frame-accent);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label .material-symbols-outlined {
+  font-size: 18px;
+  line-height: 1;
+}
+.objective-box {
+  background: var(--frame-bg2);
+  border: 1px solid var(--frame-border);
+  border-left: 4px solid var(--frame-accent);
+  border-radius: 8px;
+  padding: 32px;
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+.objective-box .objective-icon {
+  color: var(--frame-accent);
+  font-size: 40px;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+.objective-box p {
+  color: var(--frame-text2);
+  font-size: 18px;
+  line-height: 28px;
+  margin: 0;
+}
+.doc-info-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 32px;
+  align-items: stretch;
+}
+.doc-info-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.doc-cover-card {
+  background: var(--frame-bg2);
+  border: 1px solid var(--frame-border);
+  border-radius: 8px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.doc-cover-image {
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 18px 44px rgba(0,0,0,0.35);
+}
+.prompt-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+.proof-card {
+  min-width: 0;
+  cursor: zoom-in;
+}
+.proof-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  background: rgba(0,0,0,0.18);
+  transition: transform 0.28s ease, filter 0.28s ease;
+}
+.proof-card:hover .proof-image {
+  transform: scale(1.035);
+  filter: brightness(1.1);
+}
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: rgba(0,0,0,0.84);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+.image-lightbox.is-open { display: flex; }
+.image-lightbox img {
+  max-width: min(1100px, 96vw);
+  max-height: 86vh;
+  object-fit: contain;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.55);
+  background: #050505;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.08s ease-out;
+}
+.image-lightbox img.is-dragging { cursor: grabbing; transition: none; }
+.image-lightbox button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(31,31,35,0.8);
+  color: var(--frame-text);
+  cursor: pointer;
+}
+.final-actions { display: grid; gap: 24px; margin: 80px 0 120px; }
+.final-download-row { display: flex; justify-content: center; }
+.final-nav-row { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+.final-back-button {
+  padding: 16px 32px;
+  background: #ffffff;
+  color: #131317;
+  border: 1px solid rgba(255,255,255,0.85);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.final-back-button:hover { transform: translateX(-4px); box-shadow: 0 0 24px rgba(255,255,255,0.18); }
+.final-nav-row .next-lesson-btn,
+.final-nav-row .final-back-button { min-width: 260px; }
+@media (max-width: 640px) {
+  .top-nav-inner { padding: 0 16px; }
+  .nav-links, .top-connect { display: none; }
+  .page { padding: 112px 16px 0; }
+  .doc-info-layout { grid-template-columns: 1fr; }
+  .doc-cover-card { max-width: 320px; width: 100%; margin: 0 auto; }
+  .prompt-proof-grid { grid-template-columns: 1fr; }
+  .final-download-row, .final-nav-row { flex-direction: column; align-items: stretch; }
+  .final-back-button, .doc-download-btn, .next-lesson-btn { width: 100%; min-width: 0; }
+}
+.project-gradient-title {
+  background: linear-gradient(90deg, #ecb2ff 0%, #8fb8ff 45%, #00dbe9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 48px;
+  line-height: 1.12;
+  font-weight: 800;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+@media (max-width: 900px) {
+  .project-gradient-title { font-size: 34px; white-space: normal; }
+}
+</style>
+</head>
+
+<body>
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <a class="brand" href="home.html">VINHTRAN</a>
+    <div class="nav-links">
+      <a class="top-nav-link" href="info.html">Th&#244;ng tin</a>
+      <a class="top-nav-link is-active" href="project.html">D&#7921; &#225;n</a>
+      <a class="top-nav-link" href="summary.html">T&#7893;ng k&#7871;t</a>
+    </div>
+    <a class="top-connect" href="contact.html">Connect<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_forward</span></a>
+  </div>
+</nav>
+<div class="page">
+  <a class="frame-back-button" href="project.html">
+    <span class="material-symbols-outlined">arrow_back</span>
+    <span>Quay l&#7841;i danh s&#225;ch d&#7921; &#225;n</span>
+  </a>
+  <main class="project-content">
+<!-- Hero Section -->
+<header class="mb-16">
+<h1 class="project-gradient-title mb-6 max-w-6xl">
+                    Viết Prompt hiệu quả cho các tác vụ học tập
+                </h1>
+<p class="text-on-surface-variant text-lg max-w-3xl leading-relaxed">
+                    Thiết kế và đánh giá 9 prompt ở 3 cấp độ cho 3 tác vụ học tập: tóm tắt, giải thích khái niệm và tạo bộ câu hỏi ôn tập — thử nghiệm trên Gemini AI với tài liệu Tư tưởng Hồ Chí Minh.
+                </p>
+</header>
+<!-- Objective Section -->
+<section class="mb-section-gap">
+<div class="section-label"><span class="material-symbols-outlined">target</span> MỤC TIÊU BÀI TẬP</div>
+<div class="objective-box">
+<span class="material-symbols-outlined objective-icon">lightbulb</span>
+<div>
+<p>Trình bày sự so sánh giữa Prompt ban đầu và Prompt cải tiến cùng kết quả đầu ra từ AI. Qua đó rút ra nguyên tắc viết prompt hiệu quả cho các tác vụ học tập thực tế.</p>
+</div>
+</div>
+</section>
+<!-- Document Info -->
+<section class="mb-section-gap">
+<div class="section-label"><span class="material-symbols-outlined">description</span> THÔNG TIN TÀI LIỆU THỬ NGHIỆM</div>
+<div class="doc-info-layout">
+<div class="doc-info-list">
+<div class="flex justify-between items-center glass-card p-4 rounded-lg">
+<span class="text-outline font-label-caps">Tên sách</span>
+<span class="text-on-surface font-bold">Giáo trình Tư tưởng Hồ Chí Minh</span>
+</div>
+<div class="flex justify-between items-center glass-card p-4 rounded-lg">
+<span class="text-outline font-label-caps">Nhà xuất bản</span>
+<span class="text-on-surface font-bold">Bộ Giáo dục và Đào tạo</span>
+</div>
+<div class="flex justify-between items-center glass-card p-4 rounded-lg">
+<span class="text-outline font-label-caps">Năm xuất bản</span>
+<span class="text-on-surface font-bold">2019</span>
+</div>
+<div class="flex justify-between items-center glass-card p-4 rounded-lg">
+<span class="text-outline font-label-caps">Chủ biên</span>
+<span class="text-on-surface font-bold">Mạch Quang Thắng</span>
+</div>
+<div class="flex justify-between items-start glass-card p-4 rounded-lg">
+<span class="text-outline font-label-caps pt-1">Đoạn trích</span>
+<span class="text-on-surface font-bold text-right ml-8">Chương III - Tư tưởng HCM về Độc lập dân tộc và CNXH, tr.42-71</span>
+</div>
+</div>
+<div class="doc-cover-card">
+<img class="doc-cover-image" src="../resources/images/proofs/project3/giaotrinh.jpg" alt="Bìa giáo trình Tư tưởng Hồ Chí Minh">
+</div>
+</div>
+</section>
+<!-- Stats Grid -->
+<section class="mb-section-gap">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-gutter max-w-3xl mx-auto">
+<div class="glass-card p-6 rounded-xl">
+<p class="font-label-caps text-outline mb-2">Số prompt thử nghiệm</p>
+<p class="font-display-lg text-headline-lg text-primary">9</p>
+</div>
+<div class="glass-card p-6 rounded-xl">
+<p class="font-label-caps text-outline mb-2">Công cụ AI</p>
+<p class="font-headline-lg text-headline-lg-mobile text-primary mt-4">Gemini</p>
+</div>
+</div>
+</section>
+<!-- Tasks Sections -->
+<div class="flex flex-col gap-section-gap">
+<!-- Task 1 -->
+<section id="task-1">
+<div class="section-label"><span class="material-symbols-outlined">summarize</span> TÁC VỤ 1 — TÓM TẮT NỘI DUNG</div>
+<div class="space-y-4">
+<!-- Prompt Table Header -->
+<div class="hidden md:grid grid-cols-12 gap-gutter px-6 py-2 text-outline font-label-caps text-[10px]">
+<div class="col-span-2 text-center">CẤP ĐỘ</div>
+<div class="col-span-5">PROMPT ĐÃ DÙNG</div>
+<div class="col-span-5">ĐÁNH GIÁ KẾT QUẢ</div>
+</div>
+<!-- Prompt 1.1 -->
+<div class="glass-card p-6 rounded-xl grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+<div class="col-span-2 flex md:justify-center">
+<span class="bg-surface-variant text-on-surface px-4 py-1 rounded-full text-[10px] font-bold">PROMPT 1</span>
+</div>
+<div class="col-span-5">
+<code class="block bg-black p-4 rounded border border-white/5 text-secondary font-code-sm">"Tóm tắt phần nội dung văn bản sau"</code>
+</div>
+<div class="col-span-5 flex flex-col gap-2">
+<span class="text-outline font-label-caps text-[10px]">Cơ bản</span>
+<p class="text-on-surface-variant">Phản hồi khá đầy đủ, chia 4 phần rõ ràng, có ý chính nhỏ và dấu chấm đen. Tuy nhiên còn nhiều từ ngữ lan man, rườm rà.</p>
+</div>
+</div>
+<!-- Prompt 1.2 -->
+<div class="glass-card p-6 rounded-xl grid grid-cols-1 md:grid-cols-12 gap-gutter items-center border-l-4 border-secondary-container">
+<div class="col-span-2 flex md:justify-center">
+<span class="bg-secondary-container text-on-secondary-fixed px-4 py-1 rounded-full text-[10px] font-bold">PROMPT 2</span>
+</div>
+<div class="col-span-5">
+<code class="block bg-black p-4 rounded border border-white/5 text-secondary font-code-sm">"Tóm tắt đoạn văn sau thành các ý chính, trình bày bằng bullet points, dễ hiểu cho sinh viên"</code>
+</div>
+<div class="col-span-5 flex flex-col gap-2">
+<span class="text-secondary-fixed font-label-caps text-[10px]">Cải tiến</span>
+<p class="text-on-surface-variant">Nội dung đầy đủ như Prompt 1, từ ngữ cô đọng hơn, bỏ được nhiều từ thừa. Định dạng bullet rõ ràng hơn.</p>
+</div>
+</div>
+<!-- Prompt 1.3 -->
+<div class="glass-card p-6 rounded-xl grid grid-cols-1 md:grid-cols-12 gap-gutter items-center border-l-4 border-primary">
+<div class="col-span-2 flex md:justify-center">
+<span class="bg-primary text-on-primary px-4 py-1 rounded-full text-[10px] font-bold">PROMPT 3</span>
+</div>
+<div class="col-span-5">
+<code class="block bg-black p-4 rounded border border-white/5 text-secondary font-code-sm">"Bạn là giảng viên đại học môn Tư tưởng HCM. Hãy tóm tắt thành 5-7 ý chính, mỗi ý 1-2 câu, trình bày rõ ràng"</code>
+</div>
+<div class="col-span-5 flex flex-col gap-2">
+<span class="text-primary font-label-caps text-[10px]">Tốt nhất</span>
+<p class="text-on-surface-variant">Cô đọng, chỉ xoay quanh ý cốt lõi, mỗi ý vẫn được làm rõ sâu sắc trong 1-2 câu. Áp dụng role prompting triệt để.</p>
+</div>
+</div>
+</div>
+<div class="prompt-proof-grid">
+<div class="glass-card rounded-lg p-6 text-center group overflow-hidden proof-card">
+<div class="aspect-video bg-surface-container flex items-center justify-center mb-4 overflow-hidden rounded">
+<img class="proof-image" src="../resources/images/proofs/project3/task1basicprompt.png" alt="Tác vụ 1 - prompt cơ bản">
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Tác vụ 1 — Prompt cơ bản</p>
+</div>
+<div class="glass-card rounded-lg p-6 text-center group overflow-hidden proof-card">
+<div class="aspect-video bg-surface-container flex items-center justify-center mb-4 overflow-hidden rounded">
+<img class="proof-image" src="../resources/images/proofs/project3/task1advancedprompt.png" alt="Tác vụ 1 - prompt cải tiến">
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Tác vụ 1 — Prompt cải tiến</p>
+</div>
+</div>
+</section>
+<!-- Task 2 -->
+<section id="task-2">
+<div class="section-label"><span class="material-symbols-outlined">psychology</span> TÁC VỤ 2 — GIẢI THÍCH KHÁI NIỆM</div>
+<div class="space-y-4">
+<!-- Prompt Table Header -->
+<div class="hidden md:grid grid-cols-12 gap-gutter px-6 py-2 text-outline font-label-caps text-[10px]">
+<div class="col-span-2 text-center">CẤP ĐỘ</div>
+<div class="col-span-5">PROMPT ĐÃ DÙNG</div>
+<div class="col-span-5">ĐÁNH GIÁ KẾT QUẢ</div>
+</div>
+<!-- Prompt 2.1 -->
+<div class="glass-card p-6 rounded-xl grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+<div class="col-span-2 flex md:justify-center">
+<span class="bg-surface-variant text-on-surface px-4 py-1 rounded-full text-[10px] font-bold">PROMPT 1</span>
+</div>
+<div class="col-span-5">
+<code class="block bg-black p-4 rounded border border-white/5 text-secondary font-code-sm">Giải thích khái niệm “Tư tưởng Hồ Chí Minh về Độc lập Dân tộc”</code>
+</div>
+<div class="col-span-5 flex flex-col gap-2">
+<span class="text-outline font-label-caps text-[10px]">Cơ bản</span>
+<p class="text-on-surface-variant">Các ý chính được đề cập, tuy nhiên bên trong các ý chính chưa được
+làm rõ sâu sắc, mức độ tiếp cận còn ở mức nông.</p>
+</div>
+</div>
+<!-- Prompt 2.2 -->
+<div class="glass-card p-6 rounded-xl grid grid-cols-1 md:grid-cols-12 gap-gutter items-center border-l-4 border-secondary-container">
+<div class="col-span-2 flex md:justify-center">
+<span class="bg-secondary-container text-on-secondary-fixed px-4 py-1 rounded-full text-[10px] font-bold">PROMPT 2</span>
+</div>
+<div class="col-span-5">
+<code class="block bg-black p-4 rounded border border-white/5 text-secondary font-code-sm">"Giải thích khái niệm “Tư tưởng Hồ Chí Minh về Độc lập dân tộc”
+một cách đơn giản, dễ hiểu cho học sinh lớp 12, có ví dụ minh họa"</code>
+</div>
+<div class="col-span-5 flex flex-col gap-2">
+<span class="text-secondary-fixed font-label-caps text-[10px]">Cải tiến</span>
+<p class="text-on-surface-variant">Đã có ý mô tả một cách đơn giản đúng như yêu cầu, nội dung trả lời
+tập trung và cụ thể, ít lan man hơn, có ví dụ như yêu cầu, trực quan và sinh động</p>
+</div>
+</div>
+<!-- Prompt 2.3 -->
+<div class="glass-card p-6 rounded-xl grid grid-cols-1 md:grid-cols-12 gap-gutter items-center border-l-4 border-primary">
+<div class="col-span-2 flex md:justify-center">
+<span class="bg-primary text-on-primary px-4 py-1 rounded-full text-[10px] font-bold">PROMPT 3</span>
+</div>
+<div class="col-span-5">
+<code class="block bg-black p-4 rounded border border-white/5 text-secondary font-code-sm">"Bạn là giảng viên đại học. Giải thích theo cấu trúc: Định nghĩa, Đặc điểm chính, Ý nghĩa, Ví dụ minh họa. Rõ ràng, logic, dễ hiểu"</code>
+</div>
+<div class="col-span-5 flex flex-col gap-2">
+<span class="text-primary font-label-caps text-[10px]">Tốt nhất</span>
+<p class="text-on-surface-variant">Đầy đủ, đi sâu từng phần, chọn được các từ "đắt" nhất. Có ví dụ lịch sử thực tế (Tuyên ngôn Độc lập 1945). Trình bày khoa học.</p>
+</div>
+</div>
+</div>
+<div class="prompt-proof-grid">
+<div class="glass-card rounded-lg p-6 text-center group overflow-hidden proof-card">
+<div class="aspect-video bg-surface-container flex items-center justify-center mb-4 overflow-hidden rounded">
+<img class="proof-image" src="../resources/images/proofs/project3/task2basicprompt.png" alt="Tác vụ 2 - prompt cơ bản">
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Tác vụ 2 — Prompt cơ bản</p>
+</div>
+<div class="glass-card rounded-lg p-6 text-center group overflow-hidden proof-card">
+<div class="aspect-video bg-surface-container flex items-center justify-center mb-4 overflow-hidden rounded">
+<img class="proof-image" src="../resources/images/proofs/project3/task2advancedprompt.png" alt="Tác vụ 2 - prompt cải tiến">
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Tác vụ 2 — Prompt cải tiến</p>
+</div>
+</div>
+</section>
+<!-- Task 3 -->
+<section id="task-3">
+<div class="section-label"><span class="material-symbols-outlined">quiz</span> TÁC VỤ 3 — TẠO BỘ CÂU HỎI ÔN TẬP</div>
+<div class="space-y-4">
+<!-- Prompt Table Header -->
+<div class="hidden md:grid grid-cols-12 gap-gutter px-6 py-2 text-outline font-label-caps text-[10px]">
+<div class="col-span-2 text-center">CẤP ĐỘ</div>
+<div class="col-span-5">PROMPT ĐÃ DÙNG</div>
+<div class="col-span-5">ĐÁNH GIÁ KẾT QUẢ</div>
+</div>
+<!-- Prompt 3.1 -->
+<div class="glass-card p-6 rounded-xl grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+<div class="col-span-2 flex md:justify-center">
+<span class="bg-surface-variant text-on-surface px-4 py-1 rounded-full text-[10px] font-bold">PROMPT 1</span>
+</div>
+<div class="col-span-5">
+<code class="block bg-black p-4 rounded border border-white/5 text-secondary font-code-sm">"Tạo câu hỏi ôn tập về tư tưởng Hồ Chí Minh về Độc lập Dân tộc"</code>
+</div>
+<div class="col-span-5 flex flex-col gap-2">
+<span class="text-outline font-label-caps text-[10px]">Cơ bản</span>
+<p class="text-on-surface-variant">AI tạo được câu hỏi nhưng mức độ còn đơn giản, chưa phân hóa độ khó và chưa có đáp án giải thích rõ ràng.</p>
+</div>
+</div>
+<!-- Prompt 3.2 -->
+<div class="glass-card p-6 rounded-xl grid grid-cols-1 md:grid-cols-12 gap-gutter items-center border-l-4 border-secondary-container">
+<div class="col-span-2 flex md:justify-center">
+<span class="bg-secondary-container text-on-secondary-fixed px-4 py-1 rounded-full text-[10px] font-bold">PROMPT 2</span>
+</div>
+<div class="col-span-5">
+<code class="block bg-black p-4 rounded border border-white/5 text-secondary font-code-sm">"Tạo 5 câu hỏi trắc nghiệm về tư tưởng Hồ Chí Minh về Độc lập Dân
+tộc, bao gồm cả mức độ nhận biết và thông hiểu. Nội dung câu hỏi cần rõ ràng,
+không gây hiểu nhầm và phù hợp với sinh viên đại học"</code>
+</div>
+<div class="col-span-5 flex flex-col gap-2">
+<span class="text-secondary-fixed font-label-caps text-[10px]">Cải tiến</span>
+<p class="text-on-surface-variant">Độ khó đã có sự gia tăng, các câu hỏi rõ ràng, không gây xao nhãng,
+tuy nhiên lại chưa có giải thích cho các đáp án.</p>
+</div>
+</div>
+<!-- Prompt 3.3 -->
+<div class="glass-card p-6 rounded-xl grid grid-cols-1 md:grid-cols-12 gap-gutter items-center border-l-4 border-primary">
+<div class="col-span-2 flex md:justify-center">
+<span class="bg-primary text-on-primary px-4 py-1 rounded-full text-[10px] font-bold">PROMPT 3</span>
+</div>
+<div class="col-span-5">
+<code class="block bg-black p-4 rounded border border-white/5 text-secondary font-code-sm">"Bạn là giảng viên đại học. Tạo 5 câu hỏi từ dễ đến khó. Mỗi câu gồm: 4 đáp án (A-D), đáp án đúng, giải thích ngắn gọn vì sao đúng"</code>
+</div>
+<div class="col-span-5 flex flex-col gap-2">
+<span class="text-primary font-label-caps text-[10px]">Tốt nhất</span>
+<p class="text-on-surface-variant">Câu hỏi bám sát bản chất, cốt lõi. Có giải thích rõ ràng từng phương án nhiễu, phong thái chuyên nghiệp. Bám sát tư duy học thuật.</p>
+</div>
+</div>
+</div>
+<div class="prompt-proof-grid">
+<div class="glass-card rounded-lg p-6 text-center group overflow-hidden proof-card">
+<div class="aspect-video bg-surface-container flex items-center justify-center mb-4 overflow-hidden rounded">
+<img class="proof-image" src="../resources/images/proofs/project3/task3basicprompt.png" alt="Tác vụ 3 - prompt cơ bản">
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Tác vụ 3 — Prompt cơ bản</p>
+</div>
+<div class="glass-card rounded-lg p-6 text-center group overflow-hidden proof-card">
+<div class="aspect-video bg-surface-container flex items-center justify-center mb-4 overflow-hidden rounded">
+<img class="proof-image" src="../resources/images/proofs/project3/task3advancedprompt.png" alt="Tác vụ 3 - prompt cải tiến">
+</div>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Tác vụ 3 — Prompt cải tiến</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Techniques Section -->
+<section class="mt-section-gap">
+<div class="section-label"><span class="material-symbols-outlined">tune</span> KỸ THUẬT PROMPT ENGINEERING ĐÃ ÁP DỤNG</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<div class="glass-card p-6 rounded-xl border-t-2 border-primary">
+<span class="text-[10px] text-primary font-label-caps block mb-2">KỸ THUẬT 1</span>
+<h3 class="font-headline-lg-mobile text-[18px] text-white mb-3">Role Prompting</h3>
+<p class="text-on-surface-variant text-sm">Đặt vai trò "giảng viên đại học" để AI phản hồi ở mức độ chuyên sâu, học thuật và có cấu trúc rõ ràng hơn.</p>
+</div>
+<div class="glass-card p-6 rounded-xl border-t-2 border-secondary-container">
+<span class="text-[10px] text-secondary-container font-label-caps block mb-2">KỸ THUẬT 2</span>
+<h3 class="font-headline-lg-mobile text-[18px] text-white mb-3">Yêu cầu định dạng đầu ra</h3>
+<p class="text-on-surface-variant text-sm">Chỉ định rõ bullet points, số lượng ý, độ dài mỗi ý giúp AI tạo ra kết quả có cấu trúc nhất quán.</p>
+</div>
+<div class="glass-card p-6 rounded-xl border-t-2 border-tertiary">
+<span class="text-[10px] text-tertiary font-label-caps block mb-2">KỸ THUẬT 3</span>
+<h3 class="font-headline-lg-mobile text-[18px] text-white mb-3">Cung cấp ngữ cảnh</h3>
+<p class="text-on-surface-variant text-sm">Xác định đối tượng đọc (sinh viên, học sinh lớp 12) giúp AI điều chỉnh mức độ ngôn ngữ và ví dụ phù hợp.</p>
+</div>
+<div class="glass-card p-6 rounded-xl border-t-2 border-outline">
+<span class="text-[10px] text-outline font-label-caps block mb-2">KỸ THUẬT 4</span>
+<h3 class="font-headline-lg-mobile text-[18px] text-white mb-3">Cấu trúc hóa yêu cầu</h3>
+<p class="text-on-surface-variant text-sm">Liệt kê rõ các thành phần cần có (Định nghĩa, Đặc điểm, Ý nghĩa) thay vì để AI tự quyết định cấu trúc.</p>
+</div>
+</div>
+</section>
+<!-- Summary Section -->
+<section class="my-section-gap">
+<div class="section-label"><span class="material-symbols-outlined">task_alt</span> TỔNG KẾT &amp; BÀI HỌC RÚT RA</div>
+<div class="glass-card p-8 rounded-xl bg-surface-container-low">
+<ul class="space-y-6">
+<li class="flex items-start gap-4 border-b border-white/5 pb-4">
+<span class="material-symbols-outlined text-primary mt-1">arrow_forward</span>
+<p class="text-on-surface font-body-md">Chất lượng đầu ra AI phụ thuộc rất lớn vào cách xây dựng prompt — prompt mơ hồ cho kết quả chung chung.</p>
+</li>
+<li class="flex items-start gap-4 border-b border-white/5 pb-4">
+<span class="material-symbols-outlined text-primary mt-1">arrow_forward</span>
+<p class="text-on-surface font-body-md">Role prompting ("Bạn là giảng viên...") cải thiện đáng kể độ sâu và tính học thuật của phản hồi.</p>
+</li>
+<li class="flex items-start gap-4 border-b border-white/5 pb-4">
+<span class="material-symbols-outlined text-primary mt-1">arrow_forward</span>
+<p class="text-on-surface font-body-md">Yêu cầu định dạng cụ thể (số ý, độ dài, cấu trúc) giúp AI tạo ra nội dung nhất quán và dễ sử dụng hơn.</p>
+</li>
+<li class="flex items-start gap-4 border-b border-white/5 pb-4">
+<span class="material-symbols-outlined text-primary mt-1">arrow_forward</span>
+<p class="text-on-surface font-body-md">Một prompt hiệu quả cần đảm bảo: rõ ràng, cụ thể, có định hướng và phù hợp với mục tiêu sử dụng.</p>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary mt-1">arrow_forward</span>
+<p class="text-on-surface font-body-md">Kỹ năng Prompt Engineering là yếu tố quan trọng để khai thác tối đa khả năng của AI trong học tập.</p>
+</li>
+</ul>
+</div>
+</section>
+  </main>
+  <div class="action-row final-actions">
+    <div class="final-download-row">
+      <a class="doc-download-btn" href="../resources/docs/Chuong 3.pdf" download="Chuong 3.pdf" target="_blank" rel="noopener noreferrer" type="application/pdf">
+        <span class="pdf-icon material-symbols-outlined">picture_as_pdf</span>
+        <span>Download PDF</span>
+      </a>
+    </div>
+    <div class="final-nav-row">
+      <a class="final-back-button" href="project2.html">
+        <span class="material-symbols-outlined">arrow_back</span>
+        <span>Quay l&#7841;i d&#7921; &#225;n tr&#432;&#7899;c</span>
+      </a>
+      <a class="next-lesson-btn" href="project4.html">
+        <span>Ti&#7871;p t&#7909;c d&#7921; &#225;n k&#7871; ti&#7871;p</span>
+        <span class="material-symbols-outlined">arrow_forward</span>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="image-lightbox" id="imageLightbox" aria-hidden="true">
+  <button type="button" id="lightboxClose" aria-label="Đóng ảnh phóng to"><span class="material-symbols-outlined">close</span></button>
+  <img id="lightboxImage" src="" alt="Ảnh phóng to">
+</div>
+<script>
+  const lightbox = document.getElementById('imageLightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  const lightboxClose = document.getElementById('lightboxClose');
+  let zoomLevel = 1;
+  let panX = 0;
+  let panY = 0;
+  let isDragging = false;
+  let dragStartX = 0;
+  let dragStartY = 0;
+
+  const applyImageTransform = () => {
+    lightboxImage.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+  };
+
+  const resetImageTransform = () => {
+    zoomLevel = 1;
+    panX = 0;
+    panY = 0;
+    applyImageTransform();
+  };
+
+  document.querySelectorAll('.proof-image').forEach((image) => {
+    image.addEventListener('click', () => {
+      lightboxImage.src = image.src;
+      lightboxImage.alt = image.alt;
+      resetImageTransform();
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+    });
+  });
+
+  const closeLightbox = () => {
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightboxImage.src = '';
+    resetImageTransform();
+  };
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('wheel', (event) => {
+    if (!lightbox.classList.contains('is-open')) return;
+    event.preventDefault();
+    const delta = event.deltaY < 0 ? 0.14 : -0.14;
+    zoomLevel = Math.min(4, Math.max(0.6, zoomLevel + delta));
+    if (zoomLevel <= 1) {
+      panX = 0;
+      panY = 0;
+    }
+    applyImageTransform();
+  }, { passive: false });
+  lightboxImage.addEventListener('mousedown', (event) => {
+    if (zoomLevel <= 1) return;
+    isDragging = true;
+    dragStartX = event.clientX - panX;
+    dragStartY = event.clientY - panY;
+    lightboxImage.classList.add('is-dragging');
+  });
+  document.addEventListener('mousemove', (event) => {
+    if (!isDragging) return;
+    panX = event.clientX - dragStartX;
+    panY = event.clientY - dragStartY;
+    applyImageTransform();
+  });
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+    lightboxImage.classList.remove('is-dragging');
+  });
+  lightboxImage.addEventListener('dblclick', resetImageTransform);
+  lightbox.addEventListener('click', (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+  });
+
+  const motionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      motionObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.16 });
+
+  document.querySelectorAll('header, .objective-box, .doc-info-list .glass-card, .doc-cover-card, .glass-card, .proof-card').forEach((item, index) => {
+    item.classList.add('motion-card');
+    item.classList.add(index % 2 === 0 ? 'from-left' : 'from-right');
+    item.style.transitionDelay = `${Math.min(index * 38, 260)}ms`;
+    motionObserver.observe(item);
+  });
+</script>
+</body></html>

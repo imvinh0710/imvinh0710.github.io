@@ -1,0 +1,483 @@
+﻿<!DOCTYPE html><html class="dark" lang="vi" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Thông tin | VINHTRANN</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;700&amp;family=Geist:wght@700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-on-surface": "#303034",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary": "#2f303b",
+                    "surface-container": "#1f1f23",
+                    "primary-fixed-dim": "#ecb2ff",
+                    "on-secondary-fixed-variant": "#004f54",
+                    "on-background": "#e4e1e7",
+                    "on-tertiary-fixed": "#1a1b26",
+                    "background": "#131317",
+                    "tertiary-fixed-dim": "#c6c5d4",
+                    "outline-variant": "#514255",
+                    "surface": "#131317",
+                    "surface-bright": "#39393d",
+                    "on-primary-container": "#ffffff",
+                    "secondary-container": "#00eefc",
+                    "error": "#ffb4ab",
+                    "secondary-fixed-dim": "#00dbe9",
+                    "primary-fixed": "#f8d8ff",
+                    "on-primary": "#520071",
+                    "on-secondary": "#00363a",
+                    "on-primary-fixed": "#320047",
+                    "on-secondary-fixed": "#002022",
+                    "surface-container-low": "#1b1b1f",
+                    "error-container": "#93000a",
+                    "tertiary": "#c6c5d4",
+                    "surface-variant": "#353439",
+                    "on-surface-variant": "#d4c0d7",
+                    "tertiary-container": "#757583",
+                    "surface-container-high": "#2a292e",
+                    "surface-container-lowest": "#0e0e12",
+                    "on-tertiary-fixed-variant": "#454652",
+                    "on-secondary-container": "#00686f",
+                    "on-error": "#690005",
+                    "secondary": "#d3fbff",
+                    "on-surface": "#e4e1e7",
+                    "on-primary-fixed-variant": "#74009f",
+                    "surface-dim": "#131317",
+                    "outline": "#9d8ba0",
+                    "on-tertiary-container": "#ffffff",
+                    "tertiary-fixed": "#e2e1f1",
+                    "surface-tint": "#ecb2ff",
+                    "inverse-primary": "#9900cf",
+                    "secondary-fixed": "#7df4ff",
+                    "primary-container": "#bd00ff",
+                    "inverse-surface": "#e4e1e7",
+                    "primary": "#ecb2ff",
+                    "surface-container-highest": "#353439"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "margin-desktop": "64px",
+                    "section-gap": "120px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "label-caps": ["JetBrains Mono"],
+                    "display-lg": ["Geist"],
+                    "headline-lg-mobile": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "code-sm": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                    "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "code-sm": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #050505;
+            background-image: radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+            color: #e4e1e7;
+        }
+        .glass-card {
+            background: rgba(18, 18, 23, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+        .glass-card:hover {
+            border-color: rgba(189, 0, 255, 0.4);
+            box-shadow: 0 0 20px rgba(189, 0, 255, 0.1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-text {
+            text-shadow: 0 0 10px rgba(236, 178, 255, 0.5);
+        }
+        .glow-button {
+            transition: all 0.3s ease;
+        }
+        .glow-button:hover {
+            box-shadow: 0 0 15px rgba(189, 0, 255, 0.5);
+        }
+        .pill-tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4px 12px;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .pill-tag:hover {
+            border-color: #ecb2ff;
+            background: rgba(236, 178, 255, 0.1);
+        }
+
+        .profile-title-line {
+            transform-origin: left center;
+            animation: profileLineDraw 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .profile-title-text {
+            animation: profileFadeUp 0.7s ease 0.15s both;
+        }
+
+        .profile-row {
+            opacity: 0;
+            transform: translateX(-18px);
+            animation: profileSlideIn 0.55s ease forwards;
+        }
+
+        .profile-row:nth-child(1) { animation-delay: 0.35s; }
+        .profile-row:nth-child(2) { animation-delay: 0.48s; }
+        .profile-row:nth-child(3) { animation-delay: 0.61s; }
+        .profile-row:nth-child(4) { animation-delay: 0.74s; }
+        .profile-row:nth-child(5) { animation-delay: 0.87s; }
+
+        .skill-chip {
+            transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .skill-chip:hover {
+            transform: translateY(-4px);
+            border-color: #ecb2ff;
+            background: rgba(236,178,255,0.12);
+            box-shadow: 0 0 16px rgba(236,178,255,0.22);
+        }
+
+        .profile-photo-card {
+            transform-style: preserve-3d;
+            transition: transform 0.18s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            box-shadow: 0 0 0 rgba(236,178,255,0);
+        }
+
+        .profile-photo-card:hover {
+            border-color: rgba(236,178,255,0.75);
+            box-shadow: 0 0 28px rgba(236,178,255,0.28), 0 0 55px rgba(211,251,255,0.08);
+        }
+
+        .profile-photo-card::after {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            border: 1px solid rgba(211,251,255,0.22);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            pointer-events: none;
+        }
+
+        .profile-photo-card:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes profileLineDraw {
+            from { transform: scaleX(0); opacity: 0; }
+            to { transform: scaleX(1); opacity: 1; }
+        }
+
+        @keyframes profileFadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes profileSlideIn {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .education-heading {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.55s ease, transform 0.55s ease;
+        }
+
+        .education-heading.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-line {
+            transform-origin: top center;
+            transform: scaleY(0);
+            transition: transform 1.8s ease;
+        }
+
+        .timeline-line.is-visible {
+            transform: scaleY(1);
+        }
+
+        .edu-dot {
+            opacity: 0;
+            transform: translate(-50%, 0) scale(0.2);
+            transition: opacity 0.55s ease, transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.75s ease;
+        }
+
+        .edu-item.is-visible .edu-dot {
+            opacity: 1;
+            transform: translate(-50%, 0) scale(1);
+        }
+
+        .edu-main,
+        .edu-detail {
+            opacity: 0;
+            transition: opacity 0.95s ease, transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .edu-main.from-left,
+        .edu-detail.from-left { transform: translateX(-46px); }
+
+        .edu-main.from-right,
+        .edu-detail.from-right { transform: translateX(46px); }
+
+        .edu-item.is-visible .edu-main {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: 0.22s;
+        }
+
+        .edu-item.is-visible .edu-detail {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: 0.85s;
+        }
+
+        .direction-card {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(31,31,35,0.92), rgba(18,18,23,0.72));
+            border: 1px solid rgba(255,255,255,0.1);
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .direction-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(236,178,255,0.14), transparent 46%);
+            pointer-events: none;
+        }
+
+        .direction-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .direction-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(236,178,255,0.45);
+            box-shadow: 0 18px 50px rgba(0,0,0,0.28), 0 0 26px rgba(189,0,255,0.16);
+        }
+
+        .direction-icon {
+            width: 44px;
+            height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(189,0,255,0.18);
+            color: #ecb2ff;
+            box-shadow: 0 0 18px rgba(189,0,255,0.22);
+        }
+
+        .direction-list li {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .direction-list li::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            margin-top: 9px;
+            border-radius: 999px;
+            background: #d3fbff;
+            box-shadow: 0 0 10px rgba(211,251,255,0.55);
+            flex: 0 0 auto;
+        }
+
+        .top-nav-link {
+            position: relative;
+            display: inline-flex;
+            padding: 6px 0;
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+
+        .top-nav-link::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            right: 50%;
+            bottom: 0;
+            height: 2px;
+            background: currentColor;
+            border-radius: 999px;
+            transition: left 0.28s ease, right 0.28s ease;
+        }
+
+        .top-nav-link:hover {
+            transform: translateY(-4px);
+            color: #d3fbff;
+        }
+
+        .top-nav-link:hover::after {
+            left: 0;
+            right: 0;
+        }
+
+        .top-nav-link.is-active::after {
+            left: 0;
+            right: 0;
+        }
+
+        .top-connect {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .top-connect::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.28) 45%, transparent 58%);
+            transform: translateX(-130%);
+            transition: transform 0.55s ease;
+        }
+
+        .top-connect:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 22px rgba(189,0,255,0.55), 0 0 40px rgba(211,251,255,0.18);
+        }
+
+        .top-connect:hover::before {
+            transform: translateX(130%);
+        }
+
+        .top-connect .material-symbols-outlined {
+            transition: transform 0.25s ease;
+        }
+
+        .top-connect:hover .material-symbols-outlined {
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden antialiased min-h-screen flex flex-col" style="background-image: radial-gradient(circle at 5px 1492px, rgba(189, 0, 255, 0.03) 0%, transparent 400px), radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.05) 1px, transparent 0px);">
+<nav class="fixed top-0 left-0 right-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-white/5 shadow-none">
+<div class="flex justify-between items-center w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop h-full">
+<a class="font-display-lg text-headline-lg-mobile md:text-headline-lg text-primary tracking-tighter cursor-pointer hover:neon-glow-text transition-all" href="home.html">VINHTRAN</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="top-nav-link is-active text-primary font-bold font-body-md" href="info.html">Thông tin</a>
+<a class="top-nav-link text-on-surface-variant font-medium font-body-md" href="project.html">Dự án</a>
+<a class="top-nav-link text-on-surface-variant font-medium font-body-md" href="summary.html">Tổng kết</a>
+</div>
+<a class="top-connect hidden md:flex items-center gap-2 bg-primary-container text-white px-6 py-2 rounded font-label-caps text-label-caps transition-all" href="contact.html">Connect<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_forward</span></a>
+<button class="md:hidden text-primary"><span class="material-symbols-outlined text-[32px]">menu</span></button>
+</div>
+</nav>
+<main class="flex-grow pt-32">
+<section class="px-margin-desktop max-w-container-max mx-auto mb-16">
+<h2 class="profile-title-text font-headline-lg text-headline-lg mb-8 flex items-center gap-4">
+<span class="profile-title-line w-12 h-px bg-primary"></span> Thông tin cá nhân
+            </h2>
+</section>
+<!-- Hero/Bio Section -->
+<section class="px-margin-desktop max-w-container-max mx-auto mb-section-gap">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+<div class="md:col-span-7 order-2 md:order-1">
+<ul class="space-y-4 font-body-md text-body-md text-on-surface-variant mb-10">
+<li class="profile-row flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span><strong class="text-primary uppercase font-label-caps text-xs tracking-wider mr-2">H&#7885; v&#224; t&#234;n:</strong> Tr&#7847;n Th&#7871; Vinh</span></li>
+<li class="profile-row flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span><strong class="text-primary uppercase font-label-caps text-xs tracking-wider mr-2">Ng&#224;y sinh:</strong> 01/10/2007</span></li>
+<li class="profile-row flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span><strong class="text-primary uppercase font-label-caps text-xs tracking-wider mr-2">Gi&#7899;i t&#237;nh:</strong> Nam</span></li>
+<li class="profile-row flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span><strong class="text-primary uppercase font-label-caps text-xs tracking-wider mr-2">M&#227; sinh vi&#234;n:</strong> 25020430</span></li>
+<li class="profile-row flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span><strong class="text-primary uppercase font-label-caps text-xs tracking-wider mr-2">M&#227; l&#7899;p h&#7885;c ph&#7847;n:</strong> VNU1001_E252016</span></li>
+<li class="profile-row flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span><strong class="text-primary uppercase font-label-caps text-xs tracking-wider mr-2">Chuy&#234;n ng&#224;nh:</strong> C&#244;ng ngh&#7879; Th&#244;ng tin</span></li>
+<li class="profile-row flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span><strong class="text-primary uppercase font-label-caps text-xs tracking-wider mr-2">L&#297;nh v&#7921;c:</strong> UI/UX Design</span></li>
+</ul>
+<div class="mt-12"><h4 class="font-label-caps text-label-caps text-on-surface-variant mb-4 uppercase tracking-[0.2em] text-[10px]">NG&#212;N NG&#7918; L&#7852;P TR&#204;NH</h4><div class="flex flex-wrap gap-3"><span class="skill-chip px-3 py-1 rounded-full bg-white/5 border border-white/10 text-on-surface font-code-sm text-code-sm flex items-center gap-1.5"><span class="flex items-center justify-center bg-[#00599C] text-white text-[10px] font-bold w-4 h-4 rounded-sm">C++</span>C++</span><span class="skill-chip px-3 py-1 rounded-full bg-white/5 border border-white/10 text-on-surface font-code-sm text-code-sm flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-primary">coffee</span>Java</span><span class="skill-chip px-3 py-1 rounded-full bg-white/5 border border-white/10 text-on-surface font-code-sm text-code-sm flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-primary">code</span>Python</span><span class="skill-chip px-3 py-1 rounded-full bg-white/5 border border-white/10 text-on-surface font-code-sm text-code-sm flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-primary">javascript</span>JavaScript</span><span class="skill-chip px-3 py-1 rounded-full bg-white/5 border border-white/10 text-on-surface font-code-sm text-code-sm flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-primary">html</span>HTML/CSS</span></div></div>
+</div>
+<div class="md:col-span-5 order-1 md:order-2 flex justify-center md:justify-end"><div class="relative w-64 h-64 md:w-80 md:h-80"><div class="profile-photo-card w-full h-full rounded-full overflow-hidden border-2 border-primary/20 p-1 relative"><img alt="Tr&#7847;n Th&#7871; Vinh Profile" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAII356bA1FlA3mi5U-O2iKEQYS151J-OtusV9Yqovknzs1_eh4OfwQN_lCio_JYgNSPb5hNOc0z5owmVeMBhPMGCLy_49DpSPWoNEpGJ_An7KO4GSyXfe-AZn6In1pxVfSY51UXoPsRxxvIPHF-_IBaIEQtXH0kMXTNLUetyKTFQV0d0RtF5x-raDylzyloe5tW_TxXcuMEavyVTqn0kuvac20whmB6jyhuZI_ddhsc71CkN_88RUldEf0V7nceOIdR8AT7BPJAW0"></div></div></div>
+</div>
+</section>
+<!-- Hoc van Section -->
+<section class="px-margin-desktop max-w-container-max mx-auto mb-section-gap">
+<h2 class="education-heading font-headline-lg text-headline-lg mb-16 flex items-center gap-4"><span class="w-12 h-px bg-primary"></span> H&#7885;c v&#7845;n</h2>
+<div class="relative pl-8 md:pl-0"><div class="timeline-line absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-secondary to-transparent hidden md:block"></div>
+<div class="edu-item relative grid grid-cols-1 md:grid-cols-2 gap-12 mb-20 group"><div class="edu-main from-left md:text-right md:pr-16 order-2 md:order-1"><h3 class="font-headline-lg text-headline-lg-mobile text-primary mb-2">Ti&#7875;u h&#7885;c</h3><p class="text-label-caps text-secondary mb-4 font-body-md">Tr&#432;&#7901;ng Ti&#7875;u h&#7885;c Th&#7883; tr&#7845;n Tr&#7841;m Tr&#244;i &#8226; 2013 - 2018</p></div><div class="edu-dot hidden md:flex absolute left-1/2 top-2 w-4 h-4 bg-primary rounded-full border-4 border-background z-10 shadow-[0_0_15px_rgba(236,178,255,0.8)]"></div><div class="edu-detail from-right order-3 md:order-2 md:pl-16 hidden md:block"></div></div>
+<div class="edu-item relative grid grid-cols-1 md:grid-cols-2 gap-12 mb-20 group"><div class="edu-detail from-left hidden md:block order-1 md:pr-16 text-right"></div><div class="edu-dot hidden md:flex absolute left-1/2 top-2 w-4 h-4 bg-secondary rounded-full border-4 border-background z-10 shadow-[0_0_15px_rgba(0,219,233,0.8)]"></div><div class="edu-main from-right order-2 md:pl-16"><h3 class="font-headline-lg text-headline-lg-mobile mb-2 text-primary">Trung h&#7885;c C&#417; s&#7903;</h3><p class="text-label-caps text-secondary mb-4 font-body-md">Tr&#432;&#7901;ng THCS Nguy&#7877;n V&#259;n Huy&#234;n &#8226; 2018 - 2022</p></div></div>
+<div class="edu-item relative grid grid-cols-1 md:grid-cols-2 gap-12 mb-20 group"><div class="edu-main from-left md:text-right md:pr-16 order-2 md:order-1"><h3 class="font-headline-lg text-headline-lg-mobile mb-2 text-primary">Trung h&#7885;c Ph&#7893; th&#244;ng</h3><p class="text-label-caps text-secondary mb-4 font-body-md">Tr&#432;&#7901;ng THPT Nguy&#7877;n Th&#7883; Minh Khai &#8226; 2022 - 2025</p></div><div class="edu-dot hidden md:flex absolute left-1/2 top-2 w-4 h-4 bg-outline rounded-full border-4 border-background z-10"></div><div class="edu-detail from-right order-3 md:order-2 md:pl-16 hidden md:block"></div></div>
+<div class="edu-item relative grid grid-cols-1 md:grid-cols-2 gap-12 group"><div class="edu-detail from-left hidden md:block order-1 md:pr-16 text-right"></div><div class="edu-dot hidden md:flex absolute left-1/2 top-2 w-4 h-4 bg-primary rounded-full border-4 border-background z-10 shadow-[0_0_15px_rgba(189,0,255,0.6)]"></div><div class="edu-main from-right order-2 md:pl-16"><h3 class="font-headline-lg text-headline-lg-mobile text-primary mb-2">&#272;&#7841;i h&#7885;c</h3><p class="text-label-caps text-secondary mb-4 font-body-md">Tr&#432;&#7901;ng &#272;&#7841;i h&#7885;c C&#244;ng ngh&#7879; - &#272;HQGHN &#8226; 2025 - 2029</p></div></div>
+</div>
+</section>
+<!-- Muc tieu Dinh huong Section -->
+<section class="px-margin-desktop max-w-container-max mx-auto mb-section-gap">
+<h2 class="education-heading font-headline-lg text-headline-lg mb-10 flex items-center gap-4"><span class="w-12 h-px bg-primary"></span> M&#7909;c ti&#234;u &amp; &#272;&#7883;nh h&#432;&#7899;ng</h2>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter"><article class="direction-card rounded-xl p-8 md:p-10"><div class="relative z-10 flex flex-col gap-5"><span class="direction-icon material-symbols-outlined">flag</span><div><p class="font-label-caps text-label-caps text-secondary mb-3">M&#7908;C TI&#202;U C&#193; NH&#194;N</p><h3 class="font-headline-lg text-headline-lg-mobile text-on-surface mb-4">X&#226;y n&#7873;n t&#7843;ng v&#7919;ng, l&#224;m s&#7843;n ph&#7849;m th&#7853;t</h3><p class="text-on-surface-variant leading-relaxed">T&#244;i mu&#7889;n ph&#225;t tri&#7875;n t&#432; duy l&#7853;p tr&#236;nh, kh&#7843; n&#259;ng thi&#7871;t k&#7871; giao di&#7879;n v&#224; c&#225;ch t&#7893; ch&#7913;c s&#7843;n ph&#7849;m t&#7915; &#253; t&#432;&#7903;ng &#273;&#7871;n tr&#7843;i nghi&#7879;m ho&#224;n ch&#7881;nh.</p></div><ul class="direction-list text-on-surface-variant space-y-3"><li>N&#7855;m ch&#7855;c ki&#7871;n th&#7913;c n&#7873;n t&#7843;ng v&#7873; c&#244;ng ngh&#7879; th&#244;ng tin v&#224; h&#7879; th&#7889;ng ph&#7847;n m&#7873;m.</li><li>R&#232;n k&#7929; n&#259;ng UI/UX &#273;&#7875; t&#7841;o giao di&#7879;n r&#245; r&#224;ng, d&#7877; d&#249;ng, c&#243; t&#237;nh th&#7849;m m&#7929;.</li><li>X&#226;y d&#7921;ng c&#225;c d&#7921; &#225;n c&#225; nh&#226;n c&#243; th&#7875; tr&#236;nh b&#224;y, b&#7843;o tr&#236; v&#224; m&#7903; r&#7897;ng.</li></ul></div></article><article class="direction-card rounded-xl p-8 md:p-10"><div class="relative z-10 flex flex-col gap-5"><span class="direction-icon material-symbols-outlined">route</span><div><p class="font-label-caps text-label-caps text-secondary mb-3">&#272;&#7882;NH H&#431;&#7898;NG PH&#193;T TRI&#7874;N</p><h3 class="font-headline-lg text-headline-lg-mobile text-on-surface mb-4">Theo &#273;u&#7893;i Frontend v&#224; tr&#7843;i nghi&#7879;m ng&#432;&#7901;i d&#249;ng</h3><p class="text-on-surface-variant leading-relaxed">&#272;&#7883;nh h&#432;&#7899;ng c&#7911;a t&#244;i l&#224; k&#7871;t h&#7907;p k&#7929; thu&#7853;t l&#7853;p tr&#236;nh v&#7899;i t&#432; duy thi&#7871;t k&#7871; &#273;&#7875; t&#7841;o ra nh&#7919;ng s&#7843;n ph&#7849;m s&#7889; c&#243; c&#7845;u tr&#250;c t&#7889;t v&#224; tr&#7843;i nghi&#7879;m m&#432;&#7907;t m&#224;.</p></div><ul class="direction-list text-on-surface-variant space-y-3"><li>Ph&#225;t tri&#7875;n n&#259;ng l&#7921;c HTML, CSS, JavaScript v&#224; c&#225;c framework frontend hi&#7879;n &#273;&#7841;i.</li><li>H&#7885;c c&#225;ch ph&#226;n t&#237;ch nhu c&#7847;u ng&#432;&#7901;i d&#249;ng, prototype v&#224; c&#7843;i thi&#7879;n giao di&#7879;n qua ph&#7843;n h&#7891;i.</li><li>Ti&#7871;n t&#7899;i x&#226;y d&#7921;ng s&#7843;n ph&#7849;m ho&#224;n ch&#7881;nh c&#243; t&#237;nh &#7913;ng d&#7909;ng trong h&#7885;c t&#7853;p v&#224; c&#244;ng vi&#7879;c.</li></ul></div></article></div>
+</section></main>
+<script>
+        document.addEventListener('mousemove', (e) => {
+            const body = document.body;
+            const x = e.clientX;
+            const y = e.clientY;
+            body.style.backgroundImage = `
+                radial-gradient(circle at ${x}px ${y}px, rgba(189, 0, 255, 0.03) 0%, transparent 400px),
+                radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.05) 1px, transparent 0)
+            `;
+        });
+
+        const profilePhoto = document.querySelector('.profile-photo-card');
+        if (profilePhoto) {
+            profilePhoto.addEventListener('mousemove', (e) => {
+                const rect = profilePhoto.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                profilePhoto.style.transform = `rotateX(${-y * 8}deg) rotateY(${x * 8}deg) scale(1.03)`;
+            });
+
+            profilePhoto.addEventListener('mouseleave', () => {
+                profilePhoto.style.transform = '';
+            });
+        }
+
+        const revealTargets = document.querySelectorAll('.education-heading, .timeline-line, .edu-item, .direction-card');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.25, rootMargin: '0px 0px -80px 0px' });
+
+        revealTargets.forEach((target) => revealObserver.observe(target));
+    </script>
+</body></html>
