@@ -784,7 +784,7 @@
   /* ── ADVANCED SEARCH ── */
   .advanced-search-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 16px;
   }
   .operator-card,
@@ -1098,8 +1098,9 @@ code {
     padding: 6px 0 8px;
     white-space: nowrap;
   }
-  @media (max-width: 900px) {
+  @media (min-width: 641px) and (max-width: 900px) {
     .project-gradient-title { font-size: 34px; white-space: normal; }
+    .advanced-search-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 </style>
 </head>
@@ -1422,6 +1423,11 @@ code {
         <p class="operator-name">Wildcard - điền từ bất kỳ</p>
         <div class="query-snippet">hình thức lừa đảo *<br>qua không gian mạng</div>
       </div>
+      <div class="operator-card">
+        <div class="operator-symbol">related:</div>
+        <p class="operator-name">Tìm trang có nội dung liên quan</p>
+        <div class="query-snippet">Các số liệu thống kê liên quan đến an ninh mạng tại Việt Nam related:bkav.com.vn</div>
+      </div>
     </div>
   </div>
 
@@ -1488,6 +1494,27 @@ code {
           <div class="task-block">
             <p class="task-block-label">ẢNH CHỤP KẾT QUẢ</p>
             <img class="proof-image" src="resources/images/proofs/project2/wildcard.png" alt="Ảnh chụp kết quả tìm kiếm Google với toán tử wildcard">
+          </div>
+        </div>
+      </div>
+
+      <div class="search-task">
+        <div class="task-head">
+          <div class="task-title"><span class="material-symbols-outlined">hub</span><span>Tìm nguồn liên quan tới an ninh mạng</span></div>
+          <span class="task-chip">related:</span>
+        </div>
+        <div class="task-body">
+          <div class="task-block">
+            <p class="task-block-label">QUERY ĐÃ DÙNG</p>
+            <div class="query-box">Các số liệu thống kê liên quan đến an ninh mạng tại Việt Nam related:bkav.com.vn</div>
+          </div>
+          <div class="task-block">
+            <p class="task-block-label">LÝ DO CHỌN TOÁN TỬ NÀY</p>
+            <p>Toán tử related: giúp tìm các trang có nội dung gần với một nguồn đã biết, từ đó mở rộng phạm vi tham khảo nhưng vẫn bám sát chủ đề an ninh mạng.</p>
+          </div>
+          <div class="task-block">
+            <p class="task-block-label">ẢNH CHỤP KẾT QUẢ</p>
+            <img class="proof-image" src="resources/images/proofs/project2/related.png" alt="Ảnh chụp kết quả tìm kiếm Google với toán tử related:">
           </div>
         </div>
       </div>
